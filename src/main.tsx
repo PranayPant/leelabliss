@@ -5,7 +5,7 @@ import { App } from "./App.tsx";
 import "./index.css";
 import { Landing } from "components/landing/index.tsx";
 const About = lazy(
-  () => import(/* webpackChunkName: "AboutPage" */ "components/about/index.tsx")
+  () => import(/* webpackChunkName: "AboutPage" */ "pages/about/index.tsx")
 );
 
 const router = createBrowserRouter([
