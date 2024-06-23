@@ -1,4 +1,4 @@
 export default {
   "*": ["prettier --ignore-unknown --write"],
-  "*.{ts,tsx}": ["eslint --fix"],
+  "*.{ts,tsx}": ["eslint --fix", "pnpm node_modules/typescript/bin/tsc --noEmit"],
 };
