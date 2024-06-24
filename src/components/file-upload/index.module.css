@@ -1,0 +1,23 @@
+.file-upload-root {
+  display: flex;
+  height: 500px;
+  justify-content: center;
+}
+.dropzone-container {
+  border: 1px dashed black;
+  background-color: antiquewhite;
+  width: 1280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.file-list {
+  flex-grow: 1;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.file-list img {
+  width: 150px;
+  height: 150px;
+}
