@@ -5,10 +5,16 @@ export function Navbar() {
   return (
     <ul className={styles["navbar"]}>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/">Landing</Link>
+      </li>
+      <li>
+        <Link to="home">Home</Link>
       </li>
       <li>
         <Link to="about">About</Link>
+      </li>
+      <li>
+        <Link to="login">Login</Link>
       </li>
     </ul>
   );
