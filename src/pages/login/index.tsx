@@ -1,15 +1,26 @@
+import { LoginButton } from "components/login-button";
+import { getGoogleUser } from "helpers/auth/google";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useUserAuth } from "store/user";
-import { getRedirectUrl } from "utils/auth";
+import { useAuthStore } from "store/auth";
 
 export default function Login() {
-  const isLoggedIn = useUserAuth((state) => state.isLoggedIn);
-  if (!isLoggedIn) {
-    const url = getRedirectUrl();
-    console.log(url);
-    window.location.href = url;
-  } else {
-    <Navigate to="home" />;
-  }
-  return <h1>Logging in...</h1>;
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const fetchUserInfo = async () => {
+    await getGoogleUser();
+  };
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+  return (
+    <div>
+      {!isAuthenticated && (
+        <>
+          <h1>Log in</h1>
+          <LoginButton />
+        </>
+      )}
+      {isAuthenticated && <Navigate to="/home" />}
+    </div>
+  );
 }

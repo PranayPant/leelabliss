@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { App } from "./App.tsx";
 import "./index.css";
-import { Landing } from "pages/landing/index.tsx";
+import { AuthenticationProvider } from "providers/auth/index.tsx";
+
 const About = lazy(
   () => import(/* webpackChunkName: "AboutPage" */ "pages/about/index.tsx")
 );
@@ -18,42 +18,39 @@ const Login = lazy(
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: '/',
+    element: <AuthenticationProvider />,
     children: [
       {
         index: true,
-        element: <Landing />,
-      },
-      {
-        path: "about",
         element: (
-          <Suspense fallback="Loading...">
-            <About />
-          </Suspense>
-        ),
-      },
-      {
-        path: "home",
-        element: (
-          <Suspense fallback="Loading...">
+          <Suspense fallback="Loading home page...">
             <Home />
           </Suspense>
         ),
       },
+
       {
-        path: "login",
+        path: "home",
         element: (
-          <Suspense fallback="Loading...">
-            <Login />
+          <Suspense fallback="Loading home page...">
+            <Home />
           </Suspense>
         ),
       },
-      {
-        path: "*",
-        element: <div>Custom 404</div>,
-      },
     ],
+  },
+  {
+    path: "*",
+    element: <div>Custom 404</div>,
   },
 ]);
 
