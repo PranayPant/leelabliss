@@ -4,6 +4,7 @@ import { useAuthStore } from "store/auth";
 
 export function AuthenticationProvider({ children }: { children?: ReactNode }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return (
     <>
       {isAuthenticated && children}
