@@ -2,7 +2,7 @@ import { Navbar } from "components/navbar";
 import { StripeProvider } from "providers/auth/stripe";
 import { AuthenticationProvider } from "providers/auth/user";
 import { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const AboutPage = lazy(
   () => import(/* webpackChunkName: "AboutPage" */ "pages/about"),
@@ -16,13 +16,32 @@ const LoginPage = lazy(
   () => import(/* webpackChunkName: "LoginPage" */ "pages/login"),
 );
 
+const LandingPage = lazy(
+  () => import(/* webpackChunkName: "LandingPage" */ "pages/landing"),
+);
+
 export function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<AuthenticationProvider />}>
-          <Route index element={<Navigate to="login" />} />
+        <Route
+          path="/"
+          element={
+            <Suspense>
+              <LandingPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <Suspense>
+              <AboutPage />
+            </Suspense>
+          }
+        />
+        <Route element={<AuthenticationProvider />}>
           <Route element={<StripeProvider />}>
             <Route
               path="/home"
@@ -34,7 +53,7 @@ export function App() {
             />
           </Route>
           <Route
-            path="login"
+            path="/login"
             element={
               <Suspense>
                 <LoginPage />
@@ -42,14 +61,6 @@ export function App() {
             }
           />
         </Route>
-        <Route
-          path="/about"
-          element={
-            <Suspense>
-              <AboutPage />
-            </Suspense>
-          }
-        />
       </Routes>
     </BrowserRouter>
   );
