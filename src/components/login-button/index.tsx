@@ -2,8 +2,7 @@ import { authorizeWithGoogle } from "helpers/auth/google";
 import { ReactEventHandler } from "react";
 
 export function LoginButton() {
-  const navigate: ReactEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault();
+  const navigate: ReactEventHandler<HTMLButtonElement> = () => {
     authorizeWithGoogle();
   };
   return (
