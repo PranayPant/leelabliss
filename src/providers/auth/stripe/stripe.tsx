@@ -1,28 +1,17 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState } from "react";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import "./stripe.css";
+import { Outlet } from "react-router-dom";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_API_KEY
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_API_KEY,
 );
 
-export function StripeProvider({ children }: { children: ReactNode }) {
-  const [clientSecret, setClientSecret] = useState("");
-
-  useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    fetch("/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
-    })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
-  }, []);
+export function StripeProvider() {
+  const [clientSecret] = useState("");
 
   const appearance: StripeElementsOptions["appearance"] = {
     theme: "stripe",
@@ -36,9 +25,10 @@ export function StripeProvider({ children }: { children: ReactNode }) {
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          {children}
+          <Outlet />
         </Elements>
       )}
+      {!clientSecret && <Outlet />}
     </div>
   );
 }

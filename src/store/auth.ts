@@ -4,51 +4,57 @@ import { devtools, persist } from "zustand/middleware";
 import { GoogleToken, GoogleUser } from "types/auth";
 import { readStoreFromLocalStorage } from "utils/localStorage";
 import { mountStoreDevtool } from "simple-zustand-devtools";
+import { isTokenValid } from "utils/auth";
 
 export interface UserAuth {
-  isAuthenticating: boolean;
-  isAuthenticated: boolean;
   isAuthenticationError: boolean;
   user: GoogleUser | undefined;
   accessToken: string | undefined;
   tokenInfo: GoogleToken | undefined;
-  setIsAuthenticating: (isAuthenticating: boolean) => void;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  checkIsAuthenticated: () => boolean;
   setIsAuthenticationError: (isAuthenticationError: boolean) => void;
   setUser: (user: GoogleUser) => void;
   setAccessToken: (token: string) => void;
   setTokenInfo: (tokenInfo: GoogleToken) => void;
+  clear: VoidFunction;
 }
 
 export const authStore = createStore<UserAuth>()(
   devtools(
     persist(
-      (set) => {
+      (set, get) => {
         const localStorage = readStoreFromLocalStorage();
-        const tokenExpiration = localStorage?.tokenInfo?.exp;
 
         return {
-          isAuthenticating: false,
-          isAuthenticated:
-            !!tokenExpiration && parseInt(tokenExpiration) * 1000 > Date.now(),
           isAuthenticationError: false,
           user: localStorage?.user,
           accessToken: localStorage?.accessToken,
           tokenInfo: localStorage?.tokenInfo,
-          setIsAuthenticating: (isAuthenticating) => set({ isAuthenticating }),
-          setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+          checkIsAuthenticated: () => isTokenValid(get().tokenInfo?.exp),
           setIsAuthenticationError: (isAuthenticationError) =>
             set({ isAuthenticationError }),
           setUser: (user) => set({ user }),
           setAccessToken: (accessToken) => set({ accessToken }),
           setTokenInfo: (tokenInfo) => set({ tokenInfo }),
+          clear: () =>
+            set({
+              isAuthenticationError: false,
+              user: undefined,
+              accessToken: undefined,
+              tokenInfo: undefined,
+            }),
         };
       },
       {
         name: "user-auth",
-      }
-    )
-  )
+        partialize: ({ user, accessToken, tokenInfo }) => ({
+          user,
+          accessToken,
+          tokenInfo,
+        }),
+      },
+    ),
+  ),
 );
 
 function _useAuthStore(): UserAuth;

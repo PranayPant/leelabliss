@@ -43,7 +43,7 @@ export function FileUpload() {
           <ul className={styles["file-list"]}>
             {files.map((file) => (
               <li key={file.name}>
-                <figure className={styles['upload-content']}>
+                <figure className={styles["upload-content"]}>
                   {file.type.startsWith("image") && (
                     <img width={250} height={200} src={file.url} alt="" />
                   )}

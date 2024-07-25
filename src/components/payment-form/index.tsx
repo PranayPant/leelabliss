@@ -5,8 +5,9 @@ import {
   useElements,
   type PaymentElementProps,
 } from "@stripe/react-stripe-js";
+import "./payment-form.css";
 
-export default function CheckoutForm() {
+export function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -19,7 +20,7 @@ export default function CheckoutForm() {
     }
 
     const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
+      "payment_intent_client_secret",
     );
 
     if (!clientSecret) {

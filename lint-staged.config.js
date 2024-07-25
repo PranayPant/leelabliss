@@ -1,4 +1,4 @@
 export default {
   "*": ["prettier --ignore-unknown --write"],
-  "*.{ts,tsx}": ["eslint --fix", "pnpm node_modules/typescript/bin/tsc --noEmit --skipLibCheck"],
+  "*.{ts,tsx}": () => ["eslint --fix", "pnpm tsc --noEmit -p ./tsconfig.json"],
 };

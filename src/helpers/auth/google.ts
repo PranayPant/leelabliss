@@ -9,11 +9,6 @@ import { GoogleUser } from "types/auth";
 import urlcat from "urlcat";
 
 export function authorizeWithGoogle() {
-  authStore.setState({
-    isAuthenticating: true,
-    isAuthenticated: false,
-    isAuthenticationError: false,
-  });
   window.location.href = urlcat(googleOauthRedirectEndpoint, "auth", {
     client_id: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID,
     redirect_uri: import.meta.env.VITE_GOOGLE_OAUTH_REDIRECT_URI,
@@ -23,19 +18,27 @@ export function authorizeWithGoogle() {
   });
 }
 
-function getGoogleAccessToken() {
+function getAuthDetailsFromURL() {
   const accessToken = window.location.href.match(/access_token=([^&]*)\b/)?.[1];
   const error = window.location.href.match(/error=([^&]*)\b/)?.[1];
+  return { accessToken, error };
+}
+
+export function getIsAuthenticatingWithGoogle() {
+  const { accessToken } = getAuthDetailsFromURL();
+  return !!accessToken;
+}
+
+function getGoogleAccessToken() {
+  const { accessToken, error } = getAuthDetailsFromURL();
   if (!accessToken || !!error) {
     authStore.setState({
       isAuthenticationError: true,
-      isAuthenticated: false,
     });
     throw new Error("Google Authentication Failed");
   }
   authStore.setState({
     isAuthenticationError: false,
-    isAuthenticated: true,
   });
   return accessToken;
 }
@@ -55,7 +58,7 @@ export async function getGoogleUser() {
       (await fetch(userInfoUri)).json(),
       (await fetch(tokenInfoUri)).json(),
     ]);
-    authStore.setState({ user, tokenInfo, isAuthenticating: false });
+    authStore.setState({ user, tokenInfo });
   } catch (error) {
     console.error(error);
   }
@@ -68,7 +71,6 @@ export async function logoutGoogleUser() {
     token,
   });
   authStore.setState({
-    isAuthenticated: false,
     user: undefined,
     accessToken: undefined,
     tokenInfo: undefined,
