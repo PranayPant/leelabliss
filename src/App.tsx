@@ -1,4 +1,5 @@
 import { Navbar } from "components/navbar";
+import { useIsAuthenticated } from "hooks/auth";
 import { StripeProvider } from "providers/auth/stripe";
 import { AuthenticationProvider } from "providers/auth/user";
 import { Suspense, lazy } from "react";
@@ -21,47 +22,50 @@ const LandingPage = lazy(
 );
 
 export function App() {
+  const isAuthenticated = useIsAuthenticated();
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense>
-              <LandingPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <Suspense>
-              <AboutPage />
-            </Suspense>
-          }
-        />
-        <Route element={<AuthenticationProvider />}>
-          <Route element={<StripeProvider />}>
+      <main className="app-container">
+        {isAuthenticated && <Navbar />}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <LandingPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <Suspense>
+                <AboutPage />
+              </Suspense>
+            }
+          />
+          <Route element={<AuthenticationProvider />}>
+            <Route element={<StripeProvider />}>
+              <Route
+                path="/home"
+                element={
+                  <Suspense>
+                    <HomePage />
+                  </Suspense>
+                }
+              />
+            </Route>
             <Route
-              path="/home"
+              path="/login"
               element={
                 <Suspense>
-                  <HomePage />
+                  <LoginPage />
                 </Suspense>
               }
             />
           </Route>
-          <Route
-            path="/login"
-            element={
-              <Suspense>
-                <LoginPage />
-              </Suspense>
-            }
-          />
-        </Route>
-      </Routes>
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 }
