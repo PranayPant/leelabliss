@@ -1,13 +1,11 @@
 .container {
   flex-grow: 1;
   background-image: url("landing-bg.jpeg");
-  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 65% 40%;
 
-  @media screen and (width <= 760px) {
-    background-position: 65% 65%;
-  }
-
-  @media screen and (760px < width <= 1280px) {
+  @media screen and (width > 760px) {
     background-position: 50% 30%;
   }
 }
@@ -17,11 +15,12 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  padding-top: 200px;
+  padding-top: 0;
+  justify-content: center;
 
-  @media screen and (width <= 960px) {
-    padding-top: 0;
-    justify-content: center;
+  @media screen and (width > 1280px) {
+    padding-top: 200px;
+    justify-content: unset;
   }
 }
 
@@ -31,7 +30,7 @@
   font-weight: 700;
   font-style: normal;
   font-variation-settings: "wdth" 100;
-  font-size: 80px;
+  font-size: 60px;
   text-shadow:
     #fff 0px 0px 5px,
     #fff 0px 0px 10px,
@@ -42,7 +41,7 @@
     #ff2d95 0px 0px 50px,
     #ff2d95 0px 0px 75px;
 
-  @media screen and (width <= 760px) {
-    font-size: 60px;
+  @media screen and (width > 760px) {
+    font-size: 80px;
   }
 }
