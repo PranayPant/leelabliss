@@ -1,13 +1,28 @@
 .container {
   flex-grow: 1;
   background-image: url("landing-bg.jpeg");
+  background-position: 50% 30%;
+
+  @media screen and (width <= 760px) {
+    background-position: 65% 65%;
+  }
+
+  @media screen and (760px < width <= 1280px) {
+    background-position: 50% 30%;
+  }
 }
 
 .container > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 200px;
+  height: 100%;
+  padding-top: 200px;
+
+  @media screen and (width <= 960px) {
+    padding-top: 0;
+    justify-content: center;
+  }
 }
 
 .container h1 {
@@ -16,7 +31,7 @@
   font-weight: 700;
   font-style: normal;
   font-variation-settings: "wdth" 100;
-  font-size: 72px;
+  font-size: 80px;
   text-shadow:
     #fff 0px 0px 5px,
     #fff 0px 0px 10px,
@@ -26,4 +41,8 @@
     #ff2d95 0px 0px 40px,
     #ff2d95 0px 0px 50px,
     #ff2d95 0px 0px 75px;
+
+  @media screen and (width <= 760px) {
+    font-size: 60px;
+  }
 }
