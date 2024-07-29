@@ -11,10 +11,13 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "lightgallery": "^2.7.2",
     "nanoid": "^5.0.7",
+    "photoswipe": "^5.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-photoswipe-gallery": "^3.0.2",
     "react-router-dom": "^6.23.1",
     "urlcat": "^3.1.0",
     "zustand": "^4.5.4"
@@ -23,7 +26,7 @@
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
     "@types/node": "^20.14.11",
-    "@types/react": "^18.2.66",
+    "@types/react": "^18.3.3",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",

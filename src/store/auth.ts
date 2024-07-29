@@ -4,14 +4,12 @@ import { devtools, persist } from "zustand/middleware";
 import { GoogleToken, GoogleUser } from "types/auth";
 import { readStoreFromLocalStorage } from "utils/localStorage";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import { isTokenValid } from "utils/auth";
 
 export interface UserAuth {
   isAuthenticationError: boolean;
   user: GoogleUser | undefined;
   accessToken: string | undefined;
   tokenInfo: GoogleToken | undefined;
-  checkIsAuthenticated: () => boolean;
   setIsAuthenticationError: (isAuthenticationError: boolean) => void;
   setUser: (user: GoogleUser) => void;
   setAccessToken: (token: string) => void;
@@ -22,7 +20,7 @@ export interface UserAuth {
 export const authStore = createStore<UserAuth>()(
   devtools(
     persist(
-      (set, get) => {
+      (set) => {
         const localStorage = readStoreFromLocalStorage();
 
         return {
@@ -30,7 +28,6 @@ export const authStore = createStore<UserAuth>()(
           user: localStorage?.user,
           accessToken: localStorage?.accessToken,
           tokenInfo: localStorage?.tokenInfo,
-          checkIsAuthenticated: () => isTokenValid(get().tokenInfo?.exp),
           setIsAuthenticationError: (isAuthenticationError) =>
             set({ isAuthenticationError }),
           setUser: (user) => set({ user }),

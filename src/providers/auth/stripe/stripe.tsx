@@ -22,13 +22,13 @@ export function StripeProvider() {
   };
 
   return (
-    <div className="App">
+    <>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <Outlet />
         </Elements>
       )}
       {!clientSecret && <Outlet />}
-    </div>
+    </>
   );
 }

@@ -1,0 +1,40 @@
+.container {
+  position: relative;
+}
+
+.container .top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container button {
+  border-radius: 99999px;
+  padding: 0;
+}
+
+.container img {
+  border-radius: 99999px;
+  width: 48px;
+  height: 48px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.container ul {
+  position: absolute;
+  padding: 0;
+  list-style: none;
+  border-radius: 16px;
+  background-color: whitesmoke;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  right: 8px;
+  margin-top: 8px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.container li {
+  width: 100px;
+}
