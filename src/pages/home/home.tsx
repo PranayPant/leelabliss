@@ -1,19 +1,23 @@
+import { useFetch } from "hooks/api";
 import styles from "./home.module.css";
-import { MediaGallery } from "components/media-gallery/media-gallery";
-
-const MOCK_IMAGES = new Array(20).fill(null).map((_, index) => {
-  const [width, height] = [500 + index + 1, 700 + index + 1];
-  const url = `https://picsum.photos/${height}/${width}`;
-  return {
-    src: url,
-  };
-});
+import {
+  MediaGallery,
+  MediaGalleryItem,
+} from "components/media-gallery/media-gallery";
+import { FETCH_GALLERY_ENDPOINT } from "constants/api";
+import { GalleryLoadingSkeleton } from "components/media-gallery/loading-skeleton";
 
 export default function HomePage() {
+  const { data, isLoading, isError } = useFetch<unknown>(
+    FETCH_GALLERY_ENDPOINT,
+  );
   return (
     <div className={styles["container"]}>
       <h1>Memories</h1>
-      <MediaGallery items={MOCK_IMAGES} />
+      {!!data && !isLoading && !isError && (
+        <MediaGallery items={data as MediaGalleryItem[]} />
+      )}
+      {isLoading && <GalleryLoadingSkeleton />}
     </div>
   );
 }
