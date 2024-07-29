@@ -1,7 +1,7 @@
 .item {
   position: relative;
-  width: 500px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
 }
 
 .item img {
@@ -18,11 +18,26 @@
   }
 }
 
+.loading-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 4px;
+  padding: 0 8px;
+  width: 100%;
+
+  @media screen and (width > 760px) {
+    padding: 0 32px;
+  }
+  @media screen and (width > 1280px) {
+    padding: 0 64px;
+  }
+}
+
 .bouncing-loader {
   display: flex;
   justify-content: center;
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 40%;
 }
 

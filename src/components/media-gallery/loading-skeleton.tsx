@@ -1,5 +1,4 @@
 import styles from "./loading-skeleton.module.css";
-import "./media-gallery.css";
 
 export function GalleryLoadingSkeleton() {
   const items = new Array(20).fill(null).map(() => (
@@ -12,5 +11,5 @@ export function GalleryLoadingSkeleton() {
       </div>
     </div>
   ));
-  return <div className="gallery">{items}</div>;
+  return <div className={styles["loading-gallery"]}>{items}</div>;
 }
