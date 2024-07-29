@@ -1,6 +1,6 @@
 .container {
   flex-grow: 1;
-  background-image: url("landing-hero.jpeg");
+  background-image: url("/images/landing-hero.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 65% 40%;
