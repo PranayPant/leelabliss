@@ -6,16 +6,31 @@ import {
 } from "components/media-gallery/media-gallery";
 import { FETCH_GALLERY_ENDPOINT } from "constants/api";
 import { GalleryLoadingSkeleton } from "components/media-gallery/loading-skeleton";
+import { ComboBox } from "components/combo-box";
+import { useEffect, useMemo } from "react";
+import { filterContent } from "./filter";
+import { useDebounce } from "@uidotdev/usehooks";
+import { useComboBox } from "components/combo-box/hooks";
 
 export default function HomePage() {
   const { data, isLoading, isError } = useFetch<unknown>(
     FETCH_GALLERY_ENDPOINT,
   );
+  const { inputValue, handleChange } = useComboBox();
+
+  const debouncedInputValue = useDebounce(inputValue, 100);
+
+  const filteredData = useMemo(() => {
+    return filterContent(data, debouncedInputValue);
+  }, [data, debouncedInputValue]);
+
   return (
     <div className={styles["container"]}>
-      <h1>Memories</h1>
+      <div className={styles["combo-box"]}>
+        <ComboBox inputValue={inputValue} handleChange={handleChange} />
+      </div>
       {!!data && !isLoading && !isError && (
-        <MediaGallery items={data as MediaGalleryItem[]} />
+        <MediaGallery items={(filteredData ?? []) as MediaGalleryItem[]} />
       )}
       {isLoading && <GalleryLoadingSkeleton />}
     </div>

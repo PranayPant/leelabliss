@@ -3,6 +3,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.container .combo-box {
+  margin: 16px;
 }
 
 .container h1,

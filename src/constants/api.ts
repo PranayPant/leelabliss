@@ -1,2 +1,2 @@
 export const FETCH_GALLERY_ENDPOINT =
-  "https://jsonplaceholder.typicode.com/albums/1/photos";
+  "https://66a8f663e40d3aa6ff5a1cef.mockapi.io/api/v1/posts";

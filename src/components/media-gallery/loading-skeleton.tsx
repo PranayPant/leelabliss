@@ -2,10 +2,10 @@ import styles from "./loading-skeleton.module.css";
 
 export function GalleryItemLoadingSkeleton() {
   return (
-    <div className={styles["item"]}>
+    <div className={styles["loading-gallery-item"]}>
       <img
-        width={200}
-        height={200}
+        width={300}
+        height={300}
         alt="bg"
         src="/images/gallery-item-bg.avif"
       />
