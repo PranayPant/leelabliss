@@ -7,7 +7,7 @@ import {
 import { FETCH_GALLERY_ENDPOINT } from "constants/api";
 import { GalleryLoadingSkeleton } from "components/media-gallery/loading-skeleton";
 import { ComboBox } from "components/combo-box";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { filterContent } from "./filter";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useComboBox } from "components/combo-box/hooks";

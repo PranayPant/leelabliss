@@ -10,7 +10,7 @@ export function GalleryItem({ url, alt }: { url: string; alt?: string }) {
 
   return (
     <>
-      <div
+      {/* <div
         style={{
           display: isLoading ? "block" : "none",
           width: "100%",
@@ -18,9 +18,9 @@ export function GalleryItem({ url, alt }: { url: string; alt?: string }) {
         }}
       >
         <GalleryItemLoadingSkeleton />
-      </div>
+      </div> */}
       <img
-        style={{ display: isLoading ? "none" : "block" }}
+        // style={{ display: isLoading ? "none" : "block" }}
         onLoad={handleOnLoad}
         alt={alt}
         src={url}
