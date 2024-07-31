@@ -45,16 +45,14 @@ export function App() {
             }
           />
           <Route element={<AuthenticationProvider />}>
-            <Route element={<StripeProvider />}>
-              <Route
-                path="/home"
-                element={
-                  <Suspense>
-                    <HomePage />
-                  </Suspense>
-                }
-              />
-            </Route>
+            <Route
+              path="/home"
+              element={
+                <Suspense>
+                  <HomePage />
+                </Suspense>
+              }
+            />
             <Route
               path="/login"
               element={

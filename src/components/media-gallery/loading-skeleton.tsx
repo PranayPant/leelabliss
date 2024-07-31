@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import styles from "./loading-skeleton.module.css";
 
 export function GalleryItemLoadingSkeleton() {
@@ -21,6 +22,6 @@ export function GalleryItemLoadingSkeleton() {
 export function GalleryLoadingSkeleton() {
   const items = new Array(20)
     .fill(null)
-    .map(() => <GalleryItemLoadingSkeleton />);
+    .map(() => <GalleryItemLoadingSkeleton key={nanoid()} />);
   return <div className={styles["loading-gallery"]}>{items}</div>;
 }

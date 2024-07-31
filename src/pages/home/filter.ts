@@ -6,7 +6,7 @@ export function filterContent(content: unknown, query: string) {
     (content) =>
       content["title"].toLowerCase().includes(query.toLowerCase()) ||
       content["city"].toLowerCase().includes(query.toLowerCase()) ||
-      content["tags"].includes(query.toLowerCase()),
+      content["tags"].some((tag: string) => tag.includes(query.toLowerCase())),
   );
   return filteredContent;
 }

@@ -26,11 +26,13 @@ export default function HomePage() {
 
   return (
     <div className={styles["container"]}>
-      <div className={styles["combo-box"]}>
+      {/* <div className={styles["combo-box"]}>
         <ComboBox inputValue={inputValue} handleChange={handleChange} />
-      </div>
+      </div> */}
       {!!data && !isLoading && !isError && (
-        <MediaGallery items={(filteredData ?? []) as MediaGalleryItem[]} />
+        <div className={styles["gallery"]}>
+          <MediaGallery items={(filteredData ?? []) as MediaGalleryItem[]} />
+        </div>
       )}
       {isLoading && <GalleryLoadingSkeleton />}
     </div>
