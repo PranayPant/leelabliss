@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 export function useFetch<T>(
   url: string | URL | Request,
   options?: RequestInit,
+  trigger?: boolean,
 ) {
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -24,7 +25,7 @@ export function useFetch<T>(
 
   useEffect(() => {
     handleFetch();
-  }, [handleFetch]);
+  }, [handleFetch, trigger]);
 
   return { isError, isLoading, data };
 }

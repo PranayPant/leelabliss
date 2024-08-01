@@ -27,8 +27,8 @@ export function MediaGallery({ items }: MediaGalleryProps) {
       elementClassNames="gallery"
       plugins={[lgThumbnail, lgZoom, lgVideo]}
     >
-      {items.map(({ url }) => (
-        <a key={url} href={url}>
+      {items.map(({ url }, index) => (
+        <a key={`${url}-${index}`} href={url}>
           <GalleryItem url={url} />
         </a>
       ))}
