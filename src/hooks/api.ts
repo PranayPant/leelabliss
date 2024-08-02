@@ -1,9 +1,9 @@
+import { nanoid } from "nanoid";
 import { useCallback, useEffect, useState } from "react";
 
-export function useFetch<T>(
+export function useFetch<T extends Record<string, string | number | boolean>[]>(
   url: string | URL | Request,
   options?: RequestInit,
-  trigger?: boolean,
 ) {
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -13,7 +13,9 @@ export function useFetch<T>(
     try {
       setIsLoading(true);
       const data = await (await fetch(url, options)).json();
-      setData(data);
+      setData(
+        data.map((item: Record<string, string>) => ({ ...item, id: nanoid() })),
+      );
     } catch (error) {
       setIsError(true);
     } finally {
@@ -25,7 +27,7 @@ export function useFetch<T>(
 
   useEffect(() => {
     handleFetch();
-  }, [handleFetch, trigger]);
+  }, [handleFetch]);
 
-  return { isError, isLoading, data };
+  return { isError, isLoading, data, refetch: handleFetch };
 }

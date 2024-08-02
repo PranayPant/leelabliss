@@ -12,20 +12,24 @@ import { filterContent } from "./filter";
 import { useDebounce, useThrottle } from "@uidotdev/usehooks";
 import { useComboBox } from "components/combo-box/hooks";
 import { useThrottledScroll } from "hooks/dom";
+import { ImageGalleryComponent } from "components/image-gallery/image-gallery";
 
 export default function HomePage() {
   // const { inputValue, handleChange } = useComboBox();
   // const debouncedInputValue = useDebounce(inputValue, 100);
-  const { isScrollDown } = useThrottledScroll(500);
-  const { data, isLoading, isError } = useFetch<unknown>(
+  const [totalData, setTotalData] = useState<
+    Record<string, string | number | boolean>[]
+  >(() => []);
+  const { isScrollDown, scrollY } = useThrottledScroll(500);
+  const { data, isLoading, isError, refetch } = useFetch(
     FETCH_GALLERY_ENDPOINT,
-    undefined,
-    isScrollDown,
   );
-  const [totalData, setTotalData] = useState([]);
   useEffect(() => {
-    console.log("recal total data");
-    // @ts-expect-error -- types testing
+    if (isScrollDown) {
+      refetch();
+    }
+  }, [isScrollDown, scrollY, refetch]);
+  useEffect(() => {
     setTotalData((prev) => [...prev, ...(data ?? [])]);
   }, [data]);
   // const filteredTotalData = useMemo(() => {
@@ -37,11 +41,11 @@ export default function HomePage() {
       {/* <div className={styles["combo-box"]}>
         <ComboBox inputValue={inputValue} handleChange={handleChange} />
       </div> */}
-      {!!data && !isLoading && !isError && (
-        <div className={styles["gallery"]}>
-          <MediaGallery items={(totalData ?? []) as MediaGalleryItem[]} />
-        </div>
-      )}
+      <div className={styles["gallery"]}>
+        {/* <MediaGallery items={totalData as unknown as MediaGalleryItem[]} /> */}
+        <ImageGalleryComponent images={totalData ?? []} />
+      </div>
+
       {/* {isLoading && <GalleryLoadingSkeleton />} */}
     </div>
   );

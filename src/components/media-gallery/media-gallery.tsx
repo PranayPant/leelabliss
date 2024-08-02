@@ -11,10 +11,10 @@ import lgZoom from "lightgallery/plugins/zoom";
 import lgVideo from "lightgallery/plugins/video";
 
 import "./media-gallery.css";
-import { GalleryItem } from "./gallery-item";
 
 export interface MediaGalleryItem {
   url: string;
+  id: string;
 }
 
 export interface MediaGalleryProps {
@@ -27,10 +27,8 @@ export function MediaGallery({ items }: MediaGalleryProps) {
       elementClassNames="gallery"
       plugins={[lgThumbnail, lgZoom, lgVideo]}
     >
-      {items.map(({ url }, index) => (
-        <a key={`${url}-${index}`} href={url}>
-          <GalleryItem url={url} />
-        </a>
+      {items.map(({ id, url }) => (
+        <img key={id} alt={"picture"} src={url} width={300} height={300} />
       ))}
     </LightGallery>
   );
