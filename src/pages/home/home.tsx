@@ -1,52 +1,26 @@
-import { useFetch } from "hooks/api";
 import styles from "./home.module.css";
-import {
-  MediaGallery,
-  MediaGalleryItem,
-} from "components/media-gallery/media-gallery";
-import { FETCH_GALLERY_ENDPOINT } from "constants/api";
-import { GalleryLoadingSkeleton } from "components/media-gallery/loading-skeleton";
-import { ComboBox } from "components/combo-box";
-import { useEffect, useMemo, useState } from "react";
-import { filterContent } from "./filter";
-import { useDebounce, useThrottle } from "@uidotdev/usehooks";
-import { useComboBox } from "components/combo-box/hooks";
+
 import { useThrottledScroll } from "hooks/dom";
 import { ImageGalleryComponent } from "components/image-gallery/image-gallery";
+import { useContentStore } from "store/content";
+import { useEffect } from "react";
 
 export default function HomePage() {
-  // const { inputValue, handleChange } = useComboBox();
-  // const debouncedInputValue = useDebounce(inputValue, 100);
-  const [totalData, setTotalData] = useState<
-    Record<string, string | number | boolean>[]
-  >(() => []);
-  const { isScrollDown, scrollY } = useThrottledScroll(500);
-  const { data, isLoading, isError, refetch } = useFetch(
-    FETCH_GALLERY_ENDPOINT,
-  );
+  const { isScrollDown, scrollY } = useThrottledScroll(100);
+  const galleryItems = useContentStore((store) => store.content);
+  const fetchPartialContent = useContentStore((store) => store.fetchPartial);
+
   useEffect(() => {
     if (isScrollDown) {
-      refetch();
+      fetchPartialContent();
     }
-  }, [isScrollDown, scrollY, refetch]);
-  useEffect(() => {
-    setTotalData((prev) => [...prev, ...(data ?? [])]);
-  }, [data]);
-  // const filteredTotalData = useMemo(() => {
-  //   return filterContent(totalData, debouncedInputValue);
-  // }, [totalData, debouncedInputValue]);
+  }, [isScrollDown, scrollY, fetchPartialContent]);
 
   return (
     <div className={styles["container"]}>
-      {/* <div className={styles["combo-box"]}>
-        <ComboBox inputValue={inputValue} handleChange={handleChange} />
-      </div> */}
       <div className={styles["gallery"]}>
-        {/* <MediaGallery items={totalData as unknown as MediaGalleryItem[]} /> */}
-        <ImageGalleryComponent images={totalData ?? []} />
+        <ImageGalleryComponent images={galleryItems} />
       </div>
-
-      {/* {isLoading && <GalleryLoadingSkeleton />} */}
     </div>
   );
 }
