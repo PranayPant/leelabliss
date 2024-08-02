@@ -6,15 +6,15 @@ import { useContentStore } from "store/content";
 import { useEffect } from "react";
 
 export default function HomePage() {
-  const { isScrollDown, scrollY } = useThrottledScroll(100);
+  const { scrollDepth } = useThrottledScroll(100);
   const galleryItems = useContentStore((store) => store.content);
   const fetchPartialContent = useContentStore((store) => store.fetchPartial);
 
   useEffect(() => {
-    if (isScrollDown) {
+    if (scrollDepth >= 0.9) {
       fetchPartialContent();
     }
-  }, [isScrollDown, scrollY, fetchPartialContent]);
+  }, [scrollDepth, fetchPartialContent]);
 
   return (
     <div className={styles["container"]}>

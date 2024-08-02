@@ -20,9 +20,11 @@ export function useOutsideClick<T extends HTMLElement>(callback: VoidFunction) {
 export function useThrottledScroll(interval: number) {
   const [scrollY, setScrollY] = useState<number>(0);
   const [isScrollDown, setIsScrollDown] = useState<boolean>(false);
+  const [scrollDepth, setScrollDepth] = useState<number>(0);
 
   const throttledScrollY = useThrottle(scrollY, interval);
   const throttledIsScrollDown = useThrottle(isScrollDown, interval);
+  const throttledScrollDepth = useThrottle(scrollDepth, interval);
 
   const handleScroll = () => {
     setScrollY((oldScrollY) => {
@@ -31,7 +33,9 @@ export function useThrottledScroll(interval: number) {
       } else {
         setIsScrollDown(false);
       }
-
+      setScrollDepth(
+        (window.innerHeight + window.scrollY) / document.body.clientHeight,
+      );
       return window.scrollY;
     });
   };
@@ -41,5 +45,9 @@ export function useThrottledScroll(interval: number) {
     return () => document.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return { scrollY: throttledScrollY, isScrollDown: throttledIsScrollDown };
+  return {
+    scrollY: throttledScrollY,
+    isScrollDown: throttledIsScrollDown,
+    scrollDepth: throttledScrollDepth,
+  };
 }
