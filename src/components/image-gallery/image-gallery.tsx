@@ -12,10 +12,20 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
   return (
     <Gallery>
       <div className={styles["gallery"]}>
-        {images.map(({ src, url, id }) => (
+        {images.map(({ src, url, id }, index) => (
           <Item id={id} key={id} original={src ?? url} thumbnail={src ?? url}>
             {({ ref, open }) => (
-              <img id={id} ref={ref} onClick={open} src={src ?? url} />
+              <img
+                id={id}
+                ref={ref}
+                onClick={open}
+                src={src ?? url}
+                style={{
+                  maxHeight: 300,
+                  gridColumn: index % 2 === 0 ? "span 2" : "auto",
+                  // gridRow: index % 2 === 0 ? "span 2" : "auto",
+                }}
+              />
             )}
           </Item>
         ))}
