@@ -22,8 +22,10 @@ const LandingPage = lazy(
 );
 
 export function App() {
+  const isAuthenticated = useIsAuthenticated();
   return (
     <BrowserRouter>
+      {isAuthenticated && <Navbar />}
       <main className="app-container">
         <Routes>
           <Route

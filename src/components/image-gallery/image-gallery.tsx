@@ -22,7 +22,7 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
                 src={src ?? url}
                 style={{
                   maxHeight: 300,
-                  gridColumn: index % 2 === 0 ? "span 2" : "auto",
+                  // gridColumn: index % 2 === 0 ? "span 2" : "auto",
                   // gridRow: index % 2 === 0 ? "span 2" : "auto",
                 }}
               />
