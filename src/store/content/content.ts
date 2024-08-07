@@ -4,8 +4,10 @@ import { mountStoreDevtool } from "simple-zustand-devtools";
 import {
   FETCH_GALLERY_ENDPOINT,
   FETCH_PARTIAL_GALLERY_ENDPOINT,
+  GET_S3_IMAGE_PATHS_ENDPOINT,
 } from "constants/api";
 import { nanoid } from "nanoid";
+import { getImgixUrl } from "./util";
 
 export interface GalleryContent {
   id: string;
@@ -30,9 +32,16 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
       try {
         set({ isLoading: true });
         const content = (await (
-          await fetch(FETCH_GALLERY_ENDPOINT)
-        ).json()) as GalleryContent[];
-        set({ content: content.map((data) => ({ ...data, id: nanoid() })) });
+          await fetch(GET_S3_IMAGE_PATHS_ENDPOINT)
+        ).json()) as { keys: string[] };
+        set({
+          content: content.keys
+            .filter((key) => !!key.split("/")[1])
+            .map((imagePath) => ({
+              src: getImgixUrl({ imagePath, thumbnail: true }),
+              id: nanoid(),
+            })),
+        });
       } catch (error) {
         console.log("Error initializing gallery:", error),
           set({ isError: true });
@@ -43,12 +52,17 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
     fetchPartial: async () => {
       try {
         const partialContent = (await (
-          await fetch(FETCH_PARTIAL_GALLERY_ENDPOINT)
-        ).json()) as GalleryContent[];
+          await fetch(GET_S3_IMAGE_PATHS_ENDPOINT)
+        ).json()) as { keys: string[] };
         set({
           content: [
             ...get().content,
-            ...partialContent.map((data) => ({ ...data, id: nanoid() })),
+            ...partialContent.keys
+              .filter((key) => !!key.split("/")[1])
+              .map((imagePath) => ({
+                src: getImgixUrl({ imagePath, thumbnail: true }),
+                id: nanoid(),
+              })),
           ],
         });
       } catch (error) {

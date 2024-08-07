@@ -29,19 +29,15 @@ export function useUpload(files: File[]) {
       }),
     );
     const signedUrlResponses = await Promise.all(signedUrlPromises);
-    const uploadBuffers = files.map((file) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      return formData;
-    });
+
     const uploadFilePromises = signedUrlResponses.map((response, index) =>
       uploadFile({
         url: response?.preSignedUrl ?? "",
         options: {
           method: "PUT",
-          body: uploadBuffers[index],
+          body: files[index],
           headers: {
-            "content-type": files[0].type,
+            "content-type": files[index].type,
           },
         },
       }),
