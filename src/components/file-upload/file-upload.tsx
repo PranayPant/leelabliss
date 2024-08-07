@@ -1,23 +1,18 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styles from "./index.module.css";
+import { useUpload } from "./helpers";
 
 export function FileUpload() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file: File) => {
-      const reader = new FileReader();
-
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-      reader.onload = () => {
-        //const binaryStr = reader.result;
-      };
-      reader.readAsArrayBuffer(file);
       const fileObjectUrl = URL.createObjectURL(file);
-      console.log(file);
       setFiles((prev) => [
         ...prev,
-        { name: file.name, url: fileObjectUrl, type: file.type },
+        {
+          url: fileObjectUrl,
+          data: file,
+        },
       ]);
     });
   }, []);
@@ -25,12 +20,18 @@ export function FileUpload() {
     onDrop,
     accept: {
       "image/*": [],
-      "video/*": [],
     },
+    maxSize: 104857600, // 100MB
   });
   const [files, setFiles] = useState<
-    { name: string; url: string; type: string }[]
+    {
+      url: string;
+      data: File;
+    }[]
   >([]);
+
+  const fileObjects = files.map((file) => file.data);
+  const { isError, isLoading, handleUpload } = useUpload(fileObjects);
 
   return (
     <div className={styles["file-upload-root"]}>
@@ -40,21 +41,25 @@ export function FileUpload() {
       </div>
       <div>
         {files.length > 0 && (
-          <ul className={styles["file-list"]}>
-            {files.map((file) => (
-              <li key={file.name}>
-                <figure className={styles["upload-content"]}>
-                  {file.type.startsWith("image") && (
-                    <img width={250} height={200} src={file.url} alt="" />
-                  )}
-                  {file.type.startsWith("video") && (
-                    <video width={250} src={file.url} controls />
-                  )}
-                  {/* <figcaption>{file.name}</figcaption> */}
-                </figure>
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className={styles["file-list"]}>
+              {files.map((file) => (
+                <li key={file.data.name}>
+                  <figure className={styles["upload-content"]}>
+                    {file.data.type.startsWith("image") && (
+                      <img width={250} height={200} src={file.url} alt="" />
+                    )}
+                    {file.data.type.startsWith("video") && (
+                      <video width={250} src={file.url} controls />
+                    )}
+                    {/* <figcaption>{file.name}</figcaption> */}
+                  </figure>
+                </li>
+              ))}
+            </ul>
+
+            <button onClick={handleUpload}>Upload first file</button>
+          </>
         )}
       </div>
     </div>
