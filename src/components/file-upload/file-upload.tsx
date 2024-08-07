@@ -7,13 +7,26 @@ export function FileUpload() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file: File) => {
       const fileObjectUrl = URL.createObjectURL(file);
-      setFiles((prev) => [
-        ...prev,
-        {
-          url: fileObjectUrl,
-          data: file,
-        },
-      ]);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function (event: ProgressEvent<FileReader>) {
+        const image = new Image();
+        image.src = event.target?.result as string;
+        image.onload = function (event: Event) {
+          const image = event.currentTarget as HTMLImageElement | undefined;
+          const height = image?.height;
+          const width = image?.width;
+          setFiles((prev) => [
+            ...prev,
+            {
+              url: fileObjectUrl,
+              data: file,
+              height,
+              width,
+            },
+          ]);
+        };
+      };
     });
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
@@ -27,6 +40,8 @@ export function FileUpload() {
     {
       url: string;
       data: File;
+      height: number | undefined;
+      width: number | undefined;
     }[]
   >([]);
 
@@ -58,7 +73,7 @@ export function FileUpload() {
               ))}
             </ul>
 
-            <button onClick={handleUpload}>Upload first file</button>
+            <button onClick={handleUpload}>Upload</button>
           </>
         )}
       </div>

@@ -10,14 +10,12 @@ export function getImgixUrl({
 }) {
   const baseUrl = `https://${IMGIX_SUBDOMAIN}`;
   const imgixQueryParams = {
+    auto: "format",
     q: thumbnail ? "10" : "50",
     w: thumbnail ? "300" : undefined,
     h: thumbnail ? "300" : undefined,
-    fit: "crop",
+    crop: thumbnail ? "entropy" : undefined,
+    fit: thumbnail ? "crop" : undefined,
   };
-  const fullUrl = urlcat(baseUrl, imagePath, imgixQueryParams);
-
-  console.log(fullUrl);
-
-  return fullUrl;
+  return urlcat(baseUrl, imagePath, imgixQueryParams);
 }

@@ -35,14 +35,14 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
   return (
     <Gallery>
       <div className={styles["gallery"]}>
-        {images.map(({ src, url, id }) => (
+        {images.map(({ src, originalSrc, id }) => (
           <Item
-            width={dimensions[id]?.width}
-            height={dimensions[id]?.height}
+            // width={dimensions[id]?.width}
+            // height={dimensions[id]?.height}
             id={id}
             key={id}
-            original={src ?? url}
-            thumbnail={src ?? url}
+            original={originalSrc}
+            thumbnail={src}
           >
             {({ ref, open }) => (
               <img
@@ -50,7 +50,7 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
                 ref={ref}
                 onClick={open}
                 onLoad={handleOnLoad}
-                src={src ?? url}
+                src={src}
                 style={{
                   maxHeight: 300,
                   // gridColumn: index % 2 === 0 ? "span 2" : "auto",

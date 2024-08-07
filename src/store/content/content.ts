@@ -12,7 +12,7 @@ import { getImgixUrl } from "./util";
 export interface GalleryContent {
   id: string;
   src: string;
-  url?: string;
+  originalSrc?: string;
 }
 
 export interface ContentStore {
@@ -39,6 +39,7 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
             .filter((key) => !!key.split("/")[1])
             .map((imagePath) => ({
               src: getImgixUrl({ imagePath, thumbnail: true }),
+              originalSrc: getImgixUrl({ imagePath, thumbnail: false }),
               id: nanoid(),
             })),
         });
@@ -61,6 +62,7 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
               .filter((key) => !!key.split("/")[1])
               .map((imagePath) => ({
                 src: getImgixUrl({ imagePath, thumbnail: true }),
+                originalSrc: getImgixUrl({ imagePath, thumbnail: false }),
                 id: nanoid(),
               })),
           ],
