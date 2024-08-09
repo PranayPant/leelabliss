@@ -1,9 +1,12 @@
 .file-upload-root {
   display: flex;
-  height: 500px;
+  flex-direction: column;
+
   justify-content: center;
+  align-items: center;
 }
 .dropzone-container {
+  min-height: 300px;
   border: 1px dashed black;
   background-color: antiquewhite;
   width: 1280px;
@@ -42,7 +45,8 @@
   background-color: #d55959;
 }
 
-.file-list video, img {
+.file-list video,
+img {
   border-radius: 16px;
 }
 
@@ -54,4 +58,9 @@
 .upload-content {
   width: 250px;
   height: 150px;
+}
+
+.upload-preview {
+  width: 100%;
+  position: relative;
 }

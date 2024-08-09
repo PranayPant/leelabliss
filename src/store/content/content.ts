@@ -13,6 +13,8 @@ export interface GalleryContent {
   id: string;
   src: string;
   originalSrc?: string;
+  height?: string;
+  width?: string;
 }
 
 export interface ContentStore {
@@ -33,15 +35,15 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
         set({ isLoading: true });
         const content = (await (
           await fetch(GET_S3_IMAGE_PATHS_ENDPOINT)
-        ).json()) as { keys: string[] };
+        ).json()) as { key: string; height: string; width: string }[];
         set({
-          content: content.keys
-            .filter((key) => !!key.split("/")[1])
-            .map((imagePath) => ({
-              src: getImgixUrl({ imagePath, thumbnail: true }),
-              originalSrc: getImgixUrl({ imagePath, thumbnail: false }),
-              id: nanoid(),
-            })),
+          content: content.map(({ key, height, width }) => ({
+            src: getImgixUrl({ imagePath: key, thumbnail: true }),
+            originalSrc: getImgixUrl({ imagePath: key, thumbnail: false }),
+            height,
+            width,
+            id: nanoid(),
+          })),
         });
       } catch (error) {
         console.log("Error initializing gallery:", error),
@@ -54,17 +56,17 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
       try {
         const partialContent = (await (
           await fetch(GET_S3_IMAGE_PATHS_ENDPOINT)
-        ).json()) as { keys: string[] };
+        ).json()) as { key: string; height: string; width: string }[];
         set({
           content: [
             ...get().content,
-            ...partialContent.keys
-              .filter((key) => !!key.split("/")[1])
-              .map((imagePath) => ({
-                src: getImgixUrl({ imagePath, thumbnail: true }),
-                originalSrc: getImgixUrl({ imagePath, thumbnail: false }),
-                id: nanoid(),
-              })),
+            ...partialContent.map(({ key, height, width }) => ({
+              src: getImgixUrl({ imagePath: key, thumbnail: true }),
+              originalSrc: getImgixUrl({ imagePath: key, thumbnail: false }),
+              height,
+              width,
+              id: nanoid(),
+            })),
           ],
         });
       } catch (error) {

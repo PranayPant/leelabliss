@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@uidotdev/usehooks": "^2.4.1",
+    "embla-carousel": "^8.1.8",
+    "embla-carousel-react": "^8.1.8",
     "lightgallery": "^2.7.2",
     "nanoid": "^5.0.7",
     "photoswipe": "^5.4.4",

@@ -2,6 +2,8 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styles from "./index.module.css";
 import { useUpload } from "./helpers";
+import { UploadFile } from "./types";
+import { Carousel } from "components/carousel";
 
 export function FileUpload() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -36,17 +38,14 @@ export function FileUpload() {
     },
     maxSize: 104857600, // 100MB
   });
-  const [files, setFiles] = useState<
-    {
-      url: string;
-      data: File;
-      height: number | undefined;
-      width: number | undefined;
-    }[]
-  >([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
-  const fileObjects = files.map((file) => file.data);
-  const { isError, isLoading, handleUpload } = useUpload(fileObjects);
+  const { isError, isLoading, handleUpload } = useUpload();
+
+  const handleUploadImages = () => {
+    handleUpload(files);
+    setFiles([]);
+  };
 
   return (
     <div className={styles["file-upload-root"]}>
@@ -54,29 +53,17 @@ export function FileUpload() {
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </div>
-      <div>
-        {files.length > 0 && (
-          <>
-            <ul className={styles["file-list"]}>
-              {files.map((file) => (
-                <li key={file.data.name}>
-                  <figure className={styles["upload-content"]}>
-                    {file.data.type.startsWith("image") && (
-                      <img width={250} height={200} src={file.url} alt="" />
-                    )}
-                    {file.data.type.startsWith("video") && (
-                      <video width={250} src={file.url} controls />
-                    )}
-                    {/* <figcaption>{file.name}</figcaption> */}
-                  </figure>
-                </li>
-              ))}
-            </ul>
-
-            <button onClick={handleUpload}>Upload</button>
-          </>
-        )}
-      </div>
+      {files.length > 0 && (
+        <div className={styles["upload-preview"]}>
+          <Carousel
+            slides={[
+              { id: "1", data: 1 },
+              { id: "2", data: 2 },
+              { id: "3", data: 3 },
+            ]}
+          />
+        </div>
+      )}
     </div>
   );
 }
