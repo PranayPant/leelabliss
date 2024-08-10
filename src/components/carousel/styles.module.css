@@ -5,6 +5,7 @@
   --slide-spacing: 1rem;
   --slide-size: 100%;
   --detail-medium-contrast: rgb(234, 234, 234);
+  --detail-high-contrast: rgb(192, 192, 192);
   --text-high-contrast-rgb-value: 49, 49, 49;
   --text-high-contrast: rgb(49, 49, 49);
 }
@@ -70,6 +71,7 @@
 }
 .embla__button:disabled {
   color: var(--detail-high-contrast);
+  cursor: unset;
 }
 .embla__button__svg {
   width: 35%;

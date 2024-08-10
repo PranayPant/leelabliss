@@ -1,9 +1,11 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styles from "./index.module.css";
-import { useUpload } from "./helpers";
+import { useUpload } from "./use-upload";
 import { UploadFile } from "./types";
 import { Carousel } from "components/carousel";
+import { useUploadPreview } from "./upload-preview/use-upload-preview";
+import { getUploadPreviewSlides } from "./upload-preview";
 
 export function FileUpload() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -42,6 +44,11 @@ export function FileUpload() {
 
   const { isError, isLoading, handleUpload } = useUpload();
 
+  const uploadPreviewState = useUploadPreview(files);
+
+
+  const previewSlides = getUploadPreviewSlides(uploadPreviewState);
+
   const handleUploadImages = () => {
     handleUpload(files);
     setFiles([]);
@@ -55,13 +62,7 @@ export function FileUpload() {
       </div>
       {files.length > 0 && (
         <div className={styles["upload-preview"]}>
-          <Carousel
-            slides={[
-              { id: "1", data: 1 },
-              { id: "2", data: 2 },
-              { id: "3", data: 3 },
-            ]}
-          />
+          <Carousel slides={previewSlides} />
         </div>
       )}
     </div>
