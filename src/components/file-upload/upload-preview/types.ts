@@ -6,6 +6,7 @@ import {
 
 export type UploadPreviewState = {
   fileName: string;
+  fileSrc: string;
   description: string;
   tags: string[];
   tagInput: string;

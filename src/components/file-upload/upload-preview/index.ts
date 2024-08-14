@@ -1,1 +1,1 @@
-export { getUploadPreviewSlides } from "./upload-preview-helper";
+export { getUploadPreviewSlides } from "./use-upload-preview";

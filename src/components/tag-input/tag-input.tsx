@@ -5,7 +5,7 @@ export function TagInput({ tags, handleRemoveTag, inputProps }: TagInputState) {
   return (
     <div className={styles["tags-input"]}>
       <ul>
-        {tags.map((tag) => (
+        {tags?.map((tag) => (
           <li key={tag}>
             <button
               className="delete-button"

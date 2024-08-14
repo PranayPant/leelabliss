@@ -1,13 +1,19 @@
 .embla {
-  max-width: 48rem;
-  margin: auto;
-  --slide-height: 19rem;
+  max-width: 100%;
+  margin: 8px;
+  --slide-height: 39rem;
   --slide-spacing: 1rem;
   --slide-size: 100%;
   --detail-medium-contrast: rgb(234, 234, 234);
   --detail-high-contrast: rgb(192, 192, 192);
   --text-high-contrast-rgb-value: 49, 49, 49;
   --text-high-contrast: rgb(49, 49, 49);
+
+  @media screen and (width > 760px) {
+    --slide-height: 19rem;
+    max-width: 48rem;
+    margin: auto;
+  }
 }
 .embla__viewport {
   overflow: hidden;
@@ -33,6 +39,7 @@
   justify-content: center;
   height: var(--slide-height);
   user-select: none;
+  position: relative;
 }
 .embla__controls {
   display: grid;
