@@ -1,11 +1,7 @@
 import { TagInput } from "components/tag-input";
 import styles from "./upload-preview.module.css";
 import { type UploadFile, useUploadStore, uploadStore } from "store/upload";
-import {
-  ChangeEventHandler,
-  KeyboardEventHandler,
-  MouseEventHandler,
-} from "react";
+import { ChangeEventHandler, KeyboardEventHandler, MouseEvent } from "react";
 
 export function useUploadPreviewSlides() {
   const updateUploadFile = useUploadStore((store) => store.updateFile);
@@ -19,23 +15,24 @@ export function useUploadPreviewSlides() {
     updateUploadFile(id, name as "title" | "description", value);
   };
 
-  const handleRemoveTag: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const id = (event.target as HTMLButtonElement).id;
-    const tag = (event.target as HTMLButtonElement)
-      .closest("button")
-      ?.getAttribute("data-tag");
-    removeFileTag(id, tag ?? "");
+  const handleRemoveTag = (
+    event: MouseEvent<HTMLButtonElement>,
+    fileName: string,
+  ) => {
+    const tag = (event.target as HTMLButtonElement).getAttribute("data-tag");
+    removeFileTag(fileName, tag ?? "");
   };
 
   const handleInputKeydown: KeyboardEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
+    event.stopPropagation();
     const key = event.key;
     if (key === "Enter") {
       const fileName = (event.target as HTMLInputElement).getAttribute("id");
       const value = (event.target as HTMLInputElement).value;
-      console.log(fileName, value);
       addFileTag(fileName ?? "", value ?? "");
+      (event.target as HTMLInputElement).value = "";
     }
   };
 
@@ -55,7 +52,7 @@ export function useUploadPreviewSlides() {
               placeholder="Enter a title"
               value={
                 uploadStore.uploads.find(
-                  (item) => item.file?.name === file?.name
+                  (item) => item.file?.name === file?.name,
                 )!.title
               }
               onChange={handleInputChange}
@@ -69,7 +66,7 @@ export function useUploadPreviewSlides() {
               placeholder="Enter a description"
               value={
                 uploadStore.uploads.find(
-                  (item) => item.file?.name === file?.name
+                  (item) => item.file?.name === file?.name,
                 )!.description
               }
               onChange={handleInputChange}
@@ -80,10 +77,10 @@ export function useUploadPreviewSlides() {
             <TagInput
               tags={
                 uploadStore.uploads.find(
-                  (item) => item.file?.name === file?.name
+                  (item) => item.file?.name === file?.name,
                 )!.tags
               }
-              handleRemoveTag={handleRemoveTag}
+              handleRemoveTag={(e) => handleRemoveTag(e, file?.name ?? "")}
               inputProps={{
                 id: file?.name,
                 name: "tags",

@@ -8,6 +8,7 @@ export function TagInput({ tags, handleRemoveTag, inputProps }: TagInputState) {
         {tags?.map((tag) => (
           <li key={tag}>
             <button
+              type="button"
               className="delete-button"
               data-tag={tag}
               onClick={handleRemoveTag}

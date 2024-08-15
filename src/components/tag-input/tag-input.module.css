@@ -1,17 +1,20 @@
 .tags-input {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   position: relative;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 5px;
   box-shadow: 2px 2px 5px #00000033;
-  width: 50%;
+  width: 100%;
 }
 
 .tags-input ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tags-input li {
@@ -22,10 +25,13 @@
   padding: 5px 10px;
   margin-right: 5px;
   margin-bottom: 5px;
+  font-size: 16px;
+  gap: 4px;
 }
 
 .tags-input input[type="text"] {
-  border: none;
+  border: 1px solid #333;
+  border-radius: 16px;
   outline: none;
   padding: 5px;
   font-size: 14px;
@@ -36,9 +42,9 @@
 }
 
 .tags-input .delete-button {
-  background-color: transparent;
+  background-color: white !important;
   border: none;
-  color: #999;
   cursor: pointer;
   margin-left: 5px;
+  padding: 0;
 }

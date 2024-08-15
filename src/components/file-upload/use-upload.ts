@@ -1,6 +1,6 @@
 import { GET_S3_PRESIGNED_URL_ENDPOINT } from "constants/api";
 import { useManualFetch } from "hooks/api";
-import { UploadFile } from "./types";
+import { UploadFile } from "store/upload";
 
 export function useUpload() {
   const {
@@ -23,8 +23,8 @@ export function useUpload() {
         options: {
           method: "PUT",
           body: JSON.stringify({
-            key: `images/${file.data.name}`,
-            contentType: file.data.type,
+            key: `images/${file.file?.name}`,
+            contentType: file.file?.type,
             metadata: {
               height: file.height?.toString() ?? "",
               width: file.width?.toString() ?? "",
@@ -41,9 +41,9 @@ export function useUpload() {
         url: response?.preSignedUrl ?? "",
         options: {
           method: "PUT",
-          body: files[index].data,
+          body: files[index].file,
           headers: {
-            "content-type": files[index].data.type,
+            "content-type": files[index].file?.type ?? "",
             "x-amz-meta-height": files[index].height?.toString() ?? "",
             "x-amz-meta-width": files[index].width?.toString() ?? "",
             "x-amz-tagging": taggingString ?? "",

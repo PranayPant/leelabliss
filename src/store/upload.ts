@@ -18,7 +18,7 @@ export interface UploadStore {
   updateFile: (
     fileName: File["name"],
     property: "title" | "description",
-    value: string
+    value: string,
   ) => void;
   addFileTag: (fileName: string, tag: string) => void;
   removeFileTag: (fileName: string, tag: string) => void;
@@ -38,7 +38,7 @@ export const uploadStore = createStore<UploadStore>()((set, get) => {
     updateFile: (fileName, property, value) => {
       const uploads = get().uploads;
       const targetIndex = uploads.findIndex(
-        (item) => item.file?.name === fileName
+        (item) => item.file?.name === fileName,
       );
       uploads[targetIndex][property] = value;
       set({
@@ -49,7 +49,7 @@ export const uploadStore = createStore<UploadStore>()((set, get) => {
     addFileTag: (fileName, tag) => {
       const uploads = get().uploads;
       const targetIndex = uploads.findIndex(
-        (item) => item.file?.name === fileName
+        (item) => item.file?.name === fileName,
       );
       uploads[targetIndex].tags = [...uploads[targetIndex].tags, tag];
       set({
@@ -60,10 +60,11 @@ export const uploadStore = createStore<UploadStore>()((set, get) => {
     removeFileTag: (fileName, tag) => {
       const uploads = get().uploads;
       const targetIndex = uploads.findIndex(
-        (item) => item.file?.name === fileName
+        (item) => item.file?.name === fileName,
       );
+      console.log(fileName, tag, targetIndex);
       uploads[targetIndex].tags = uploads[targetIndex].tags.filter(
-        (currentTag) => currentTag !== tag
+        (currentTag) => currentTag !== tag,
       );
       set({
         uploads,
