@@ -5,10 +5,6 @@
   width: 100%;
   padding: 8px;
   position: relative;
-
-  @media screen and (width >= 760px) {
-    flex-direction: row;
-  }
 }
 
 .upload-preview-container > div {
@@ -29,7 +25,6 @@
   flex-direction: column;
   flex-grow: 1;
   padding: 16px;
-  min-width: 300px;
 }
 
 .upload-preview-container label {
