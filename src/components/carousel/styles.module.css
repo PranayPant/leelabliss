@@ -1,7 +1,6 @@
 .embla {
   max-width: 100%;
   margin: 8px;
-  --slide-height: 39rem;
   --slide-spacing: 1rem;
   --slide-size: 100%;
   --detail-medium-contrast: rgb(234, 234, 234);
@@ -10,7 +9,6 @@
   --text-high-contrast: rgb(49, 49, 49);
 
   @media screen and (width > 760px) {
-    --slide-height: 19rem;
     max-width: 48rem;
     margin: auto;
   }
@@ -37,7 +35,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--slide-height);
   user-select: none;
   position: relative;
 }

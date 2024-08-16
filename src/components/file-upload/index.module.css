@@ -28,38 +28,6 @@
   margin: 4px;
 }
 
-.file-list::-webkit-scrollbar {
-  width: 16px;
-}
-
-.file-list::-webkit-scrollbar-track {
-  border-radius: 8px;
-  background-color: #e7e7e7;
-  border: 1px solid #cacaca;
-}
-
-.file-list::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  border: 3px solid transparent;
-  background-clip: content-box;
-  background-color: #d55959;
-}
-
-.file-list video,
-img {
-  border-radius: 16px;
-}
-
-.file-list li {
-  width: fit-content;
-  height: 150px;
-}
-
-.upload-content {
-  width: 250px;
-  height: 150px;
-}
-
 .upload-preview {
   width: 100%;
   position: relative;
