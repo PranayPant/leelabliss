@@ -1,6 +1,6 @@
 import { TagInput } from "components/tag-input";
 import styles from "./upload-preview.module.css";
-import { type UploadFile, useUploadStore, uploadStore } from "store/upload";
+import { useUploadStore, uploadStore } from "store/upload";
 import { ChangeEventHandler, KeyboardEventHandler, MouseEvent } from "react";
 
 export function useUploadPreviewSlides() {
@@ -108,7 +108,7 @@ export function handleDrop(acceptedFiles: File[]) {
         const width = image?.naturalWidth ?? 0;
         addFile({
           file,
-          title: "",
+          title: file?.name,
           description: "",
           width,
           height,

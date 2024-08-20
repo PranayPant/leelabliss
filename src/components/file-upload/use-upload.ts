@@ -17,8 +17,13 @@ export function useUpload() {
   } = useManualFetch();
 
   const handleUpload = async (files: UploadFile[]) => {
-    const signedUrlPromises = files.map((file) =>
-      getPresignedUrl({
+    const taggings = files.map((file) => {
+      const customTagsString = file.tags?.join(",");
+      const tagging = `tags=${customTagsString}&height=${file.height}&width=${file.width}`;
+      return tagging;
+    });
+    const signedUrlPromises = files.map((file, index) => {
+      return getPresignedUrl({
         url: GET_S3_PRESIGNED_URL_ENDPOINT,
         options: {
           method: "PUT",
@@ -29,14 +34,14 @@ export function useUpload() {
               height: file.height?.toString() ?? "",
               width: file.width?.toString() ?? "",
             },
+            tagging: taggings[index],
           }),
         },
-      }),
-    );
+      });
+    });
     const signedUrlResponses = await Promise.all(signedUrlPromises);
 
     const uploadFilePromises = signedUrlResponses.map((response, index) => {
-      const taggingString = files[index].tags?.join("&");
       return uploadFile({
         url: response?.preSignedUrl ?? "",
         options: {
@@ -46,7 +51,7 @@ export function useUpload() {
             "content-type": files[index].file?.type ?? "",
             "x-amz-meta-height": files[index].height?.toString() ?? "",
             "x-amz-meta-width": files[index].width?.toString() ?? "",
-            "x-amz-tagging": taggingString ?? "",
+            "x-amz-tagging": taggings[index],
           },
         },
       });

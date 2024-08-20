@@ -4,6 +4,7 @@ import { Carousel } from "components/carousel";
 import styles from "./index.module.css";
 import { useUpload } from "./use-upload";
 import { handleDrop, useUploadPreviewSlides } from "./upload-preview/helpers";
+import { useUploadStore } from "store/upload";
 
 export function FileUpload() {
   const { getRootProps, getInputProps } = useDropzone({
@@ -15,6 +16,7 @@ export function FileUpload() {
   });
 
   const { isError, isLoading, handleUpload } = useUpload();
+  const uploads = useUploadStore((store) => store.uploads);
 
   const uploadSlides = useUploadPreviewSlides();
 
@@ -26,6 +28,9 @@ export function FileUpload() {
       </div>
       {uploadSlides.length > 0 && (
         <div className={styles["upload-preview"]}>
+          <button type="submit" onClick={() => handleUpload(uploads)}>
+            Upload
+          </button>
           <Carousel slides={uploadSlides} />
         </div>
       )}
