@@ -18,10 +18,13 @@ export function useUpload() {
 
   const handleUpload = async (files: UploadFile[]) => {
     const taggings = files.map((file) => {
-      const customTagsString = file.tags?.join(",");
+      const customTagsString = file.tags
+        ?.map((tag) => tag.replace(/\s/, "_"))
+        .join("+");
       const tagging = `tags=${customTagsString}&height=${file.height}&width=${file.width}`;
       return tagging;
     });
+    console.log(taggings);
     const signedUrlPromises = files.map((file, index) => {
       return getPresignedUrl({
         url: GET_S3_PRESIGNED_URL_ENDPOINT,
