@@ -21,10 +21,9 @@ export function useUpload() {
       const customTagsString = file.tags
         ?.map((tag) => tag.replace(/\s/, "_"))
         .join("+");
-      const tagging = `tags=${customTagsString}&height=${file.height}&width=${file.width}`;
+      const tagging = `tags=${customTagsString}&height=${file.height}&width=${file.width}&title=${file.title.replace(/\s/, "+")}&description=${file.description.replace(/\s/, "+")}`;
       return tagging;
     });
-    console.log(taggings);
     const signedUrlPromises = files.map((file, index) => {
       return getPresignedUrl({
         url: GET_S3_PRESIGNED_URL_ENDPOINT,
