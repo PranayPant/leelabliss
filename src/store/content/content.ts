@@ -1,49 +1,57 @@
 import { useStore } from "zustand";
 import { createStore } from "zustand/vanilla";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import {
-  FETCH_GALLERY_ENDPOINT,
-  FETCH_PARTIAL_GALLERY_ENDPOINT,
-  GET_S3_IMAGE_PATHS_ENDPOINT,
-} from "constants/api";
+import { GET_S3_IMAGE_PATHS_ENDPOINT } from "constants/api";
 import { nanoid } from "nanoid";
-import { getImgixUrl } from "./util";
 
 export interface GalleryContent {
-  id: string;
-  src: string;
-  originalSrc?: string;
-  height?: string;
-  width?: string;
+  imagePath: string;
+  mediaType: string;
+  width: string;
+  height: string;
+  createdAt: string;
+  description: string;
+  tags: string;
+  title: string;
+  id?: string;
 }
 
 export interface ContentStore {
   isLoading: boolean;
   isError: boolean;
   content: GalleryContent[];
+  paginationKey: Record<string, string> | undefined;
   init: VoidFunction;
   fetchPartial: VoidFunction;
 }
+
+export type FetchGalleryContentResponse = {
+  items: GalleryContent[];
+  lastEvaluatedKey: Record<string, string>;
+};
 
 export const contentStore = createStore<ContentStore>()((set, get) => {
   return {
     isLoading: false,
     isError: false,
     content: [],
+    paginationKey: undefined,
     init: async () => {
       try {
         set({ isLoading: true });
-        const content = (await (
-          await fetch(GET_S3_IMAGE_PATHS_ENDPOINT)
-        ).json()) as { key: string; height: string; width: string }[];
+        const { items, lastEvaluatedKey } = (await (
+          await fetch(GET_S3_IMAGE_PATHS_ENDPOINT, {
+            method: "POST",
+            body: JSON.stringify({
+              limit: 10,
+              ascending: false,
+              lastEvaluatedKey: get().paginationKey,
+            }),
+          })
+        ).json()) as FetchGalleryContentResponse;
         set({
-          content: content.map(({ key, height, width }) => ({
-            src: getImgixUrl({ imagePath: key, thumbnail: true }),
-            originalSrc: getImgixUrl({ imagePath: key, thumbnail: false }),
-            height,
-            width,
-            id: nanoid(),
-          })),
+          content: items.map((item) => ({ ...item, id: nanoid() })),
+          paginationKey: lastEvaluatedKey,
         });
       } catch (error) {
         console.log("Error initializing gallery:", error),
@@ -54,20 +62,22 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
     },
     fetchPartial: async () => {
       try {
-        const partialContent = (await (
-          await fetch(GET_S3_IMAGE_PATHS_ENDPOINT)
-        ).json()) as { key: string; height: string; width: string }[];
+        const { items, lastEvaluatedKey } = (await (
+          await fetch(GET_S3_IMAGE_PATHS_ENDPOINT, {
+            method: "POST",
+            body: JSON.stringify({
+              limit: 3,
+              ascending: false,
+              lastEvaluatedKey: get().paginationKey,
+            }),
+          })
+        ).json()) as FetchGalleryContentResponse;
         set({
           content: [
             ...get().content,
-            ...partialContent.map(({ key, height, width }) => ({
-              src: getImgixUrl({ imagePath: key, thumbnail: true }),
-              originalSrc: getImgixUrl({ imagePath: key, thumbnail: false }),
-              height,
-              width,
-              id: nanoid(),
-            })),
+            ...items.map((item) => ({ ...item, id: nanoid() })),
           ],
+          paginationKey: lastEvaluatedKey,
         });
       } catch (error) {
         console.log("Error fetching partial gallery content:", error);

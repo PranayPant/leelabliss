@@ -3,63 +3,44 @@ import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import styles from "./image-gallery.module.css";
 import { GalleryContent } from "store/content";
-import { ReactEventHandler, useState } from "react";
+import { getImgixUrl } from "store/content/util";
 
 interface ImageGalleryProps {
   images: GalleryContent[];
 }
 
 export function ImageGalleryComponent({ images }: ImageGalleryProps) {
-  const [dimensions, setDimensions] = useState<{
-    [id in string]:
-      | {
-          width: number | undefined;
-          height: number | undefined;
-        }
-      | undefined;
-  }>({});
-  const handleOnLoad: ReactEventHandler<HTMLImageElement> = ({
-    currentTarget,
-  }) => {
-    const id = currentTarget.getAttribute("id")!;
-    const height = currentTarget.naturalHeight;
-    const width = currentTarget.naturalWidth;
-    setDimensions((prev) => ({
-      ...prev,
-      [id]: {
-        height,
-        width,
-      },
-    }));
-  };
   return (
     <Gallery>
       <div className={styles["gallery"]}>
-        {images.map(({ src, originalSrc, id }) => (
-          <Item
-            // width={dimensions[id]?.width}
-            // height={dimensions[id]?.height}
-            id={id}
-            key={id}
-            original={originalSrc}
-            thumbnail={src}
-          >
-            {({ ref, open }) => (
-              <img
-                id={id}
-                ref={ref}
-                onClick={open}
-                onLoad={handleOnLoad}
-                src={src}
-                style={{
-                  maxHeight: 300,
-                  // gridColumn: index % 2 === 0 ? "span 2" : "auto",
-                  // gridRow: index % 2 === 0 ? "span 2" : "auto",
-                }}
-              />
-            )}
-          </Item>
-        ))}
+        {images.map(({ id, imagePath, height, width }) => {
+          const thumbnailSrc = getImgixUrl({ imagePath, thumbnail: true });
+          const originalSrc = getImgixUrl({ imagePath, thumbnail: false });
+          return (
+            <Item
+              width={width}
+              height={height}
+              id={imagePath}
+              key={id}
+              original={originalSrc}
+              thumbnail={thumbnailSrc}
+            >
+              {({ ref, open }) => (
+                <img
+                  id={id}
+                  ref={ref}
+                  onClick={open}
+                  src={thumbnailSrc}
+                  style={{
+                    maxHeight: 300,
+                    // gridColumn: index % 2 === 0 ? "span 2" : "auto",
+                    // gridRow: index % 2 === 0 ? "span 2" : "auto",
+                  }}
+                />
+              )}
+            </Item>
+          );
+        })}
       </div>
     </Gallery>
   );
