@@ -47,6 +47,7 @@ export function useUploadPreviewSlides() {
           <span>
             <label htmlFor="title">Title</label>
             <input
+              required
               id={file?.name}
               name="title"
               placeholder="Enter a title"

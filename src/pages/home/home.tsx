@@ -19,7 +19,7 @@ function HomePageComponent() {
     isLastPage,
   } = useInfiniteHits<GalleryContent>();
   const { query, refine } = useSearchBox();
-  const { debouncedValue, value: inputValue, handleChange } = useInput(500);
+  const { debouncedValue, value: inputValue, handleChange } = useInput(300);
 
   useEffect(() => {
     if (scrollDepth >= 0.9) {

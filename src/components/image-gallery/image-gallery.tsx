@@ -3,39 +3,48 @@ import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import styles from "./image-gallery.module.css";
 import { GalleryContent } from "store/content";
-import { getImgixUrl } from "store/content/util";
+import { getImgixUrl } from "utils/imgix";
+import { CSSProperties } from "react";
 
 interface ImageGalleryProps {
   images: GalleryContent[];
 }
 
+const smallItemStyles: CSSProperties = {
+  cursor: "pointer",
+  maxHeight: 300,
+};
+
 export function ImageGalleryComponent({ images }: ImageGalleryProps) {
   return (
     <Gallery>
       <div className={styles["gallery"]}>
-        {images.map(({ id, imagePath, height, width }) => {
-          const thumbnailSrc = getImgixUrl({ imagePath, thumbnail: true });
-          const originalSrc = getImgixUrl({ imagePath, thumbnail: false });
+        {images.map(({ id, imagePath, height, width, title, description }) => {
+          const originalSrc = getImgixUrl({
+            imagePath,
+            width,
+            height,
+            thumbnail: false,
+          });
+          const thumbnailSrc = getImgixUrl({
+            imagePath,
+            thumbnail: true,
+          });
           return (
-            <Item
+            <Item<HTMLImageElement>
+              key={id}
               width={width}
               height={height}
-              id={imagePath}
-              key={id}
               original={originalSrc}
               thumbnail={thumbnailSrc}
+              alt={title ?? description}
             >
               {({ ref, open }) => (
                 <img
-                  id={id}
                   ref={ref}
                   onClick={open}
                   src={thumbnailSrc}
-                  style={{
-                    maxHeight: 300,
-                    // gridColumn: index % 2 === 0 ? "span 2" : "auto",
-                    // gridRow: index % 2 === 0 ? "span 2" : "auto",
-                  }}
+                  style={smallItemStyles}
                 />
               )}
             </Item>
