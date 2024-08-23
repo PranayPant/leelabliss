@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useThrottle } from "@uidotdev/usehooks";
 
 export function useOutsideClick<T extends HTMLElement>(callback: VoidFunction) {

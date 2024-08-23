@@ -2,25 +2,53 @@ import styles from "./home.module.css";
 
 import { useThrottledScroll } from "hooks/dom";
 import { ImageGalleryComponent } from "components/image-gallery/image-gallery";
-import { useContentStore } from "store/content";
+import { GalleryContent, useContentStore } from "store/content";
 import { useEffect } from "react";
+import { withSearch } from "providers/search";
+import { useInfiniteHits, useSearchBox } from "react-instantsearch";
+import { useInput } from "hooks/search";
+import { ComboBox } from "components/combo-box";
 
-export default function HomePage() {
+function HomePageComponent() {
   const { scrollDepth } = useThrottledScroll(100);
   const galleryItems = useContentStore((store) => store.content);
   const fetchPartialContent = useContentStore((store) => store.fetchPartial);
+  const {
+    items: refinedItems,
+    showMore,
+    isLastPage,
+  } = useInfiniteHits<GalleryContent>();
+  const { query, refine, clear } = useSearchBox();
+  const {
+    throttledValue: throttledInputValue,
+    value: inputValue,
+    handleChange,
+  } = useInput(300);
 
   useEffect(() => {
     if (scrollDepth >= 0.9) {
-      fetchPartialContent();
+      if (!query) {
+        fetchPartialContent();
+      } else if (!isLastPage) {
+        showMore();
+      }
     }
-  }, [scrollDepth, fetchPartialContent]);
+  }, [scrollDepth, fetchPartialContent, query, showMore, isLastPage]);
+
+  useEffect(() => {
+    refine(throttledInputValue);
+  }, [throttledInputValue, refine]);
 
   return (
     <div className={styles["container"]}>
       <div className={styles["gallery"]}>
-        <ImageGalleryComponent images={galleryItems} />
+        <ComboBox inputValue={inputValue} handleChange={handleChange} />
+        <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
       </div>
     </div>
   );
 }
+
+const HomePage = withSearch(HomePageComponent);
+
+export default HomePage;
