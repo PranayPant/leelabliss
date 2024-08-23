@@ -18,12 +18,8 @@ function HomePageComponent() {
     showMore,
     isLastPage,
   } = useInfiniteHits<GalleryContent>();
-  const { query, refine, clear } = useSearchBox();
-  const {
-    throttledValue: throttledInputValue,
-    value: inputValue,
-    handleChange,
-  } = useInput(300);
+  const { query, refine } = useSearchBox();
+  const { debouncedValue, value: inputValue, handleChange } = useInput(500);
 
   useEffect(() => {
     if (scrollDepth >= 0.9) {
@@ -36,13 +32,15 @@ function HomePageComponent() {
   }, [scrollDepth, fetchPartialContent, query, showMore, isLastPage]);
 
   useEffect(() => {
-    refine(throttledInputValue);
-  }, [throttledInputValue, refine]);
+    refine(debouncedValue);
+  }, [debouncedValue, refine]);
 
   return (
     <div className={styles["container"]}>
       <div className={styles["gallery"]}>
-        <ComboBox inputValue={inputValue} handleChange={handleChange} />
+        <div className={styles["search"]}>
+          <ComboBox inputValue={inputValue} handleChange={handleChange} />
+        </div>
         <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
       </div>
     </div>

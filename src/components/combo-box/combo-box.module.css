@@ -1,52 +1,22 @@
 .combo-box {
-  height: 48px;
   background-clip: padding-box;
   display: flex;
-  justify-content: center;
-}
-
-.combo-box .filter {
-  flex-grow: 1;
+  padding: 16px 0 16px 8px;
   border: 1px solid #ced4da;
-  border-top-left-radius: 32px;
-  border-bottom-left-radius: 32px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: unset;
-  padding: unset;
-  display: flex;
-}
-
-.filter button {
-  border: 1px solid #ced4da;
-  border-top-left-radius: 32px;
-  border-bottom-left-radius: 32px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  background-color: unset;
-  padding: unset;
+  border-radius: 32px;
+  width: 100%;
+  margin: auto;
+  transition: border-color 0.15s ease-in-out;
+  &:focus-within {
+    border-color: #86b7fe;
+    border-width: 2px;
+  }
 }
 
 .combo-box .search {
-  flex-grow: 1;
-  border: 1px solid #ced4da;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 32px;
-  border-bottom-right-radius: 32px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: unset;
   padding: 0 16px 0 14px;
-  &:hover {
-    background-color: rgb(247, 245, 245);
-  }
+  margin-left: auto;
 }
 
 .search svg {
@@ -57,40 +27,17 @@
 }
 
 .combo-box input {
-  width: 250px;
-  outline: none;
-  padding: 6px 16px;
+  box-shadow: unset;
+  border: unset;
+  width: auto;
+  flex-grow: 1;
+  height: 26px;
+  padding: 0 8px;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-top-left-radius: 32px;
-  border-bottom-left-radius: 32px;
-  border-right: none;
-  /* border-left: none; */
+  outline: none;
   appearance: none;
-  transition:
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
-  &:focus {
-    color: #212529;
-    background-color: #fff;
-    border-color: #86b7fe;
-    border-right-color: unset;
-    border-width: 2px;
-    outline: 0;
-    & + .search {
-      outline: 0;
-      color: #212529;
-      border-color: #86b7fe;
-      border-width: 2px;
-    }
-  }
-
-  @media screen and (width > 760px) {
-    width: 450px;
-  }
 }
