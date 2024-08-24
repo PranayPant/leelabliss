@@ -22,8 +22,6 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
         {images.map(({ id, imagePath, height, width, title, description }) => {
           const originalSrc = getImgixUrl({
             imagePath,
-            width,
-            height,
             thumbnail: false,
           });
           const thumbnailSrc = getImgixUrl({
