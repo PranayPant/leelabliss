@@ -43,7 +43,7 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
           await fetch(GET_S3_IMAGE_PATHS_ENDPOINT, {
             method: "POST",
             body: JSON.stringify({
-              limit: 10,
+              limit: 20,
               ascending: false,
               lastEvaluatedKey: get().paginationKey,
             }),
