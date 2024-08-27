@@ -23,6 +23,7 @@ export interface ContentStore {
   paginationKey: Record<string, string> | undefined;
   init: VoidFunction;
   fetchPartial: VoidFunction;
+  reset: VoidFunction;
 }
 
 export type FetchGalleryContentResponse = {
@@ -36,6 +37,14 @@ export const contentStore = createStore<ContentStore>()((set, get) => {
     isError: false,
     content: [],
     paginationKey: undefined,
+    reset: () => {
+      set({
+        isError: false,
+        isLoading: false,
+        content: [],
+        paginationKey: undefined,
+      });
+    },
     init: async () => {
       try {
         set({ isLoading: true });

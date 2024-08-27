@@ -1,15 +1,14 @@
 .file-upload-root {
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
 }
 .dropzone-container {
   min-height: 300px;
   border: 1px dashed black;
   background-color: antiquewhite;
-  width: 1280px;
   display: flex;
   align-items: center;
   justify-content: center;
