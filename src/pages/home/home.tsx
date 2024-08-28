@@ -11,7 +11,7 @@ import { ComboBox } from "components/combo-box";
 
 function HomePageComponent() {
   const { scrollDepth } = useThrottledScroll(100);
-  const reset = useContentStore((store) => store.reset);
+  const resetContentStore = useContentStore((store) => store.reset);
   const galleryItems = useContentStore((store) => store.content);
   const fetchPartialContent = useContentStore((store) => store.fetchPartial);
   const {
@@ -37,8 +37,8 @@ function HomePageComponent() {
   }, [debouncedValue, refine]);
 
   useEffect(() => {
-    return () => reset();
-  }, [reset]);
+    return () => resetContentStore();
+  }, [resetContentStore]);
 
   return (
     <div className={styles["container"]}>
