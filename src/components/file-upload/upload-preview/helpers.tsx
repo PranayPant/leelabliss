@@ -114,6 +114,7 @@ export function handleDrop(acceptedFiles: File[]) {
           width,
           height,
           tags: [],
+          uploadStatus: "idle",
         });
       };
     };

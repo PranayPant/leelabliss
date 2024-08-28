@@ -1,6 +1,7 @@
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { useStore } from "zustand";
 import { createStore } from "zustand/vanilla";
+import { uploadFilesHelper } from "./helpers";
 
 export type UploadFile = {
   file: File | undefined;
@@ -9,6 +10,7 @@ export type UploadFile = {
   width: number;
   height: number;
   tags: string[];
+  uploadStatus: "idle" | "pending" | "success" | "error";
 };
 
 export interface UploadStore {
@@ -22,6 +24,7 @@ export interface UploadStore {
   ) => void;
   addFileTag: (fileName: string, tag: string) => void;
   removeFileTag: (fileName: string, tag: string) => void;
+  uploadFiles: VoidFunction;
 }
 
 export const uploadStore = createStore<UploadStore>()((set, get) => {
@@ -69,6 +72,11 @@ export const uploadStore = createStore<UploadStore>()((set, get) => {
       set({
         uploads,
       });
+    },
+
+    uploadFiles: async () => {
+      const files = get().uploads;
+      await uploadFilesHelper(files);
     },
   };
 });

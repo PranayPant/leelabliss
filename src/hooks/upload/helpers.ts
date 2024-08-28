@@ -19,6 +19,7 @@ export function handleImageDrop(acceptedFiles: File[]) {
           width,
           height,
           tags: [],
+          uploadStatus: "idle",
         });
       };
     };
