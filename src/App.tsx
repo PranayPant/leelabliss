@@ -5,10 +5,6 @@ import { AuthenticationProvider } from "providers/auth/user";
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const UploadPage = lazy(
-  () => import(/* webpackChunkName: "UploadPage" */ "pages/upload"),
-);
-
 const HomePage = lazy(
   () => import(/* webpackChunkName: "HomePage" */ "pages/home"),
 );
@@ -33,14 +29,6 @@ export function App() {
             element={
               <Suspense>
                 <LandingPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/upload"
-            element={
-              <Suspense>
-                <UploadPage />
               </Suspense>
             }
           />

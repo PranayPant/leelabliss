@@ -1,6 +1,7 @@
 .modal-body {
   width: 100%;
   overflow: hidden !important;
+  margin: 0;
 }
 
 .modal-body section {
