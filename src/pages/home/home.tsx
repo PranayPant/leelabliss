@@ -3,11 +3,12 @@ import styles from "./home.module.css";
 import { useThrottledScroll } from "hooks/dom";
 import { ImageGalleryComponent } from "components/image-gallery/image-gallery";
 import { GalleryContent, useContentStore } from "store/content";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { withSearch } from "providers/search";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch";
 import { useInput } from "hooks/search";
 import { ComboBox } from "components/combo-box";
+import { UploadModal } from "components/upload-modal";
 
 function HomePageComponent() {
   const { scrollDepth } = useThrottledScroll(100);
@@ -21,6 +22,7 @@ function HomePageComponent() {
   } = useInfiniteHits<GalleryContent>();
   const { query, refine } = useSearchBox();
   const { debouncedValue, value: inputValue, handleChange } = useInput(300);
+  const [openModal, setOpenModal] = useState<boolean>(true);
 
   useEffect(() => {
     if (scrollDepth >= 0.9) {
@@ -47,6 +49,7 @@ function HomePageComponent() {
           <ComboBox inputValue={inputValue} handleChange={handleChange} />
         </div>
         <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
+        <UploadModal open={openModal} onClose={() => setOpenModal(false)} />
       </div>
     </div>
   );

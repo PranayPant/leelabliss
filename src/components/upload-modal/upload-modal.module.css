@@ -1,0 +1,12 @@
+.modal-body {
+  width: 100%;
+}
+
+.modal-body section {
+  margin: 32px;
+  margin-bottom: 0;
+  position: relative;
+}
+.modal-body section button {
+  margin: auto;
+}

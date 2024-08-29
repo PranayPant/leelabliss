@@ -43,6 +43,9 @@ importers:
       react-photoswipe-gallery:
         specifier: ^3.0.2
         version: 3.0.2(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.3.1)
+      react-responsive-modal:
+        specifier: ^6.4.2
+        version: 6.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^6.23.1
         version: 6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -177,6 +180,22 @@ packages:
         integrity: sha512-DSgLeL/FNcpXuzav5wfYvHCGvynXkJbn3Zvc3823AEe9nPwW9IK4UoCSS5yGymmQzN0pCPvivtgS6/8U2kkm1w==,
       }
     engines: { node: ">=6.9.0" }
+
+  "@bedrock-layout/use-forwarded-ref@1.6.1":
+    resolution:
+      {
+        integrity: sha512-GD9A9AFLzFNjr7k6fgerSqxfwDWl+wsPS11PErOKe1zkVz0y7RGC9gzlOiX/JrgpyB3NFHWIuGtoOQqifJQQpw==,
+      }
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+
+  "@bedrock-layout/use-stateful-ref@1.4.1":
+    resolution:
+      {
+        integrity: sha512-4eKO2KdQEXcR5LI4QcxqlJykJUDQJWDeWYAukIn6sRQYoabcfI5kDl61PUi6FR6o8VFgQ8IEP7HleKqWlSe8SQ==,
+      }
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
 
   "@esbuild/aix-ppc64@0.21.5":
     resolution:
@@ -988,6 +1007,12 @@ packages:
         integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==,
       }
 
+  body-scroll-lock@3.1.5:
+    resolution:
+      {
+        integrity: sha512-Yi1Xaml0EvNA0OYWxXiYNqY24AfWkbA6w5vxE7GWxtKfzIbZM+Qw+aSmkgsbWzbHiy/RCSkUZBplVxTA+E4jJg==,
+      }
+
   brace-expansion@1.1.11:
     resolution:
       {
@@ -1034,6 +1059,12 @@ packages:
         integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==,
       }
     engines: { node: ^12.17.0 || ^14.13 || >=16.0.0 }
+
+  classnames@2.5.1:
+    resolution:
+      {
+        integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==,
+      }
 
   cli-cursor@4.0.0:
     resolution:
@@ -2042,6 +2073,15 @@ packages:
       prop-types: ">= 15.7.0"
       react: ">= 16.8.0"
 
+  react-responsive-modal@6.4.2:
+    resolution:
+      {
+        integrity: sha512-ARjGEKE5Gu5CSvyA8U9ARVbtK4SMAtdXsjtzwtxRlQIHC99RQTnOUctLpl7+/sp1Kg1OJZ6yqvp6ivd4TBueEw==,
+      }
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: ^16.8.0 || ^17 || ^18
+
   react-router-dom@6.23.1:
     resolution:
       {
@@ -2512,6 +2552,15 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  "@bedrock-layout/use-forwarded-ref@1.6.1(react@18.3.1)":
+    dependencies:
+      "@bedrock-layout/use-stateful-ref": 1.4.1(react@18.3.1)
+      react: 18.3.1
+
+  "@bedrock-layout/use-stateful-ref@1.4.1(react@18.3.1)":
+    dependencies:
+      react: 18.3.1
+
   "@esbuild/aix-ppc64@0.21.5":
     optional: true
 
@@ -2910,6 +2959,8 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
+  body-scroll-lock@3.1.5: {}
+
   brace-expansion@1.1.11:
     dependencies:
       balanced-match: 1.0.2
@@ -2939,6 +2990,8 @@ snapshots:
       supports-color: 7.2.0
 
   chalk@5.3.0: {}
+
+  classnames@2.5.1: {}
 
   cli-cursor@4.0.0:
     dependencies:
@@ -3536,6 +3589,14 @@ snapshots:
       photoswipe: 5.4.4
       prop-types: 15.8.1
       react: 18.3.1
+
+  react-responsive-modal@6.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      "@bedrock-layout/use-forwarded-ref": 1.6.1(react@18.3.1)
+      body-scroll-lock: 3.1.5
+      classnames: 2.5.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-router-dom@6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
