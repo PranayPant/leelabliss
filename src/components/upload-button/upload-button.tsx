@@ -1,5 +1,6 @@
 import { useUpload } from "hooks/upload";
 import styles from "./upload-button.module.css";
+import { uploadStore } from "store/upload";
 
 export function UploadButton() {
   const {
@@ -8,7 +9,7 @@ export function UploadButton() {
   return (
     <div {...getRootProps({ className: styles["container"] })}>
       <input {...getInputProps()} />
-      <button>
+      <button onClick={() => uploadStore.setState({ shouldShowModal: true })}>
         <svg
           fill="#fff"
           height="20px"

@@ -2,8 +2,11 @@ import "react-responsive-modal/styles.css";
 import { Modal, ModalProps } from "react-responsive-modal";
 import styles from "./upload-modal.module.css";
 import { Carousel } from "components/carousel";
+import { useUploadStore } from "store/upload";
+import { UploadSlide } from "./upload-slide";
 
 export function UploadModal(props: ModalProps) {
+  const uploads = useUploadStore((store) => store.uploads);
   return (
     <Modal
       center
@@ -14,12 +17,12 @@ export function UploadModal(props: ModalProps) {
     >
       <section>
         <Carousel
-          slides={[
-            { id: "1", data: "1" },
-            { id: "2", data: "2" },
-          ]}
+          slides={uploads.map((upload) => ({
+            id: upload.file?.name ?? "",
+            data: <UploadSlide file={upload.file} />,
+          }))}
         />
-        <button>Submit files</button>
+        <button className={styles["submit-btn"]}>Submit files</button>
       </section>
     </Modal>
   );

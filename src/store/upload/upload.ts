@@ -15,6 +15,7 @@ export type UploadFile = {
 
 export interface UploadStore {
   uploads: UploadFile[];
+  shouldShowModal: boolean;
   addFile: (file: UploadFile) => void;
   removeFile: (fileName: File["name"]) => void;
   updateFile: (
@@ -25,11 +26,15 @@ export interface UploadStore {
   addFileTag: (fileName: string, tag: string) => void;
   removeFileTag: (fileName: string, tag: string) => void;
   uploadFiles: VoidFunction;
+  setStore: (
+    store: Partial<Pick<UploadStore, "uploads" | "shouldShowModal">>,
+  ) => void;
 }
 
 export const uploadStore = createStore<UploadStore>()((set, get) => {
   return {
     uploads: [],
+    shouldShowModal: false,
     addFile: (upload) => set({ uploads: [...get().uploads, upload] }),
     removeFile: (fileName) =>
       set({
@@ -78,6 +83,7 @@ export const uploadStore = createStore<UploadStore>()((set, get) => {
       const files = get().uploads;
       await uploadFilesHelper(files);
     },
+    setStore: (store) => set(store),
   };
 });
 

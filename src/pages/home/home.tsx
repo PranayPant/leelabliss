@@ -9,6 +9,7 @@ import { useInfiniteHits, useSearchBox } from "react-instantsearch";
 import { useInput } from "hooks/search";
 import { ComboBox } from "components/combo-box";
 import { UploadModal } from "components/upload-modal";
+import { useUploadStore } from "store/upload";
 
 function HomePageComponent() {
   const { scrollDepth } = useThrottledScroll(100);
@@ -22,7 +23,9 @@ function HomePageComponent() {
   } = useInfiniteHits<GalleryContent>();
   const { query, refine } = useSearchBox();
   const { debouncedValue, value: inputValue, handleChange } = useInput(300);
-  const [openModal, setOpenModal] = useState<boolean>(true);
+  const shouldShowModal = useUploadStore((store) => store.shouldShowModal);
+  const uploads = useUploadStore((store) => store.uploads);
+  const setStore = useUploadStore((store) => store.setStore);
 
   useEffect(() => {
     if (scrollDepth >= 0.9) {
@@ -49,7 +52,10 @@ function HomePageComponent() {
           <ComboBox inputValue={inputValue} handleChange={handleChange} />
         </div>
         <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
-        <UploadModal open={openModal} onClose={() => setOpenModal(false)} />
+        <UploadModal
+          open={shouldShowModal && uploads.length > 0}
+          onClose={() => setStore({ shouldShowModal: false })}
+        />
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaOptionsType } from "embla-carousel";
 import { ReactNode } from "react";
-import { PrevButton, NextButton, usePrevNextButtons } from "./controls";
+import { PrevButton, NextButton } from "./controls";
 import styles from "./styles.module.css";
+import { usePrevNextButtons } from "./use-controls";
 
 export interface CarouselProps {
   slides: { id: string; data: ReactNode }[];
@@ -21,6 +22,7 @@ export function Carousel({ slides, options }: CarouselProps) {
 
   return (
     <div className={styles["embla"]}>
+      <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
       <div className={styles["embla__viewport"]} ref={emblaRef}>
         <div className={styles["embla__container"]}>
           {slides.map(({ id, data }) => (
@@ -30,12 +32,7 @@ export function Carousel({ slides, options }: CarouselProps) {
           ))}
         </div>
       </div>
-      <div className={styles["embla__controls"]}>
-        <div className={styles["embla__buttons"]}>
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        </div>
-      </div>
+      <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
     </div>
   );
 }

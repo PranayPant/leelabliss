@@ -1,4 +1,5 @@
 .embla {
+  position: relative;
   max-width: 100%;
   margin: 8px;
   --slide-spacing: 1rem;
@@ -15,6 +16,7 @@
 }
 .embla__viewport {
   overflow: hidden;
+  padding: 0 16px;
 }
 .embla__container {
   display: flex;
@@ -57,22 +59,31 @@
   appearance: none;
   background-color: transparent;
   touch-action: manipulation;
-  display: inline-flex;
   text-decoration: none;
   cursor: pointer;
   border: 0;
   padding: 0;
-  margin: 0;
-  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+  /* box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast); */
   width: 3.6rem;
   height: 3.6rem;
   z-index: 1;
   border-radius: 50%;
   color: var(--text-body);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
+
+.embla button.embla__button {
+  position: absolute;
+  top: 50%;
+}
+
+.embla button.embla__button-prev {
+  left: -50px;
+}
+
+.embla button.embla__button-next {
+  right: -50px;
+}
+
 .embla__button:disabled {
   color: var(--detail-high-contrast);
   cursor: unset;
