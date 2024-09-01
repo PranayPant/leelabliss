@@ -3,7 +3,7 @@ import styles from "./home.module.css";
 import { useThrottledScroll } from "hooks/dom";
 import { ImageGalleryComponent } from "components/image-gallery/image-gallery";
 import { GalleryContent, useContentStore } from "store/content";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { withSearch } from "providers/search";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch";
 import { useInput } from "hooks/search";
@@ -54,7 +54,7 @@ function HomePageComponent() {
         <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
         <UploadModal
           open={shouldShowModal && uploads.length > 0}
-          onClose={() => setStore({ shouldShowModal: false })}
+          onClose={() => setStore({ shouldShowModal: false, uploads: [] })}
         />
       </div>
     </div>
