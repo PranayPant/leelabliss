@@ -1,38 +1,54 @@
 import "photoswipe/dist/photoswipe.css";
 
 import { Gallery, Item } from "react-photoswipe-gallery";
+import styles from "./image-gallery.module.css";
+import { GalleryContent } from "store/content";
+import { getImgixUrl } from "utils/imgix";
+import { CSSProperties } from "react";
 
-export interface ImageGalleryItem {
-  original: string;
-  thumbnail: string;
-  width: string;
-  height: string;
+interface ImageGalleryProps {
+  images: GalleryContent[];
 }
 
-export interface ImageGalleryProps {
-  images: ImageGalleryItem[];
-}
+const smallItemStyles: CSSProperties = {
+  cursor: "pointer",
+  maxHeight: 300,
+};
 
 export function ImageGalleryComponent({ images }: ImageGalleryProps) {
   return (
     <Gallery>
-      {images.map(({ original, thumbnail, width, height }) => (
-        <Item
-          original={original}
-          thumbnail={thumbnail}
-          width={width}
-          height={height}
-        >
-          {({ ref, open }) => (
-            <img
-              ref={ref}
-              onClick={open}
-              src={thumbnail}
-              style={{ width: "100%" }}
-            />
-          )}
-        </Item>
-      ))}
+      <div className={styles["gallery"]}>
+        {images.map(({ id, imagePath, height, width, title, description }) => {
+          const originalSrc = getImgixUrl({
+            imagePath,
+            thumbnail: false,
+          });
+          const thumbnailSrc = getImgixUrl({
+            imagePath,
+            thumbnail: true,
+          });
+          return (
+            <Item<HTMLImageElement>
+              key={id}
+              width={width}
+              height={height}
+              original={originalSrc}
+              thumbnail={thumbnailSrc}
+              alt={title ?? description}
+            >
+              {({ ref, open }) => (
+                <img
+                  ref={ref}
+                  onClick={open}
+                  src={thumbnailSrc}
+                  style={smallItemStyles}
+                />
+              )}
+            </Item>
+          );
+        })}
+      </div>
     </Gallery>
   );
 }

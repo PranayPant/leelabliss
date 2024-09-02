@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./index.module.css";
 import { useIsAuthenticated } from "hooks/auth";
 import { UserMenu } from "components/user-menu";
+import { UploadButton } from "components/upload-button";
 
 export function Navbar() {
   const isAuthenticated = useIsAuthenticated();
@@ -13,7 +14,10 @@ export function Navbar() {
         </li>
       )}
       {isAuthenticated && (
-        <div className={styles["logout"]}>
+        <div className={styles["actions"]}>
+          <div className={styles["upload-btn"]}>
+            <UploadButton />
+          </div>
           <UserMenu />
         </div>
       )}

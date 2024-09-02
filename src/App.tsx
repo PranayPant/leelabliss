@@ -5,10 +5,6 @@ import { AuthenticationProvider } from "providers/auth/user";
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const AboutPage = lazy(
-  () => import(/* webpackChunkName: "AboutPage" */ "pages/about"),
-);
-
 const HomePage = lazy(
   () => import(/* webpackChunkName: "HomePage" */ "pages/home"),
 );
@@ -25,8 +21,8 @@ export function App() {
   const isAuthenticated = useIsAuthenticated();
   return (
     <BrowserRouter>
+      {isAuthenticated && <Navbar />}
       <main className="app-container">
-        {isAuthenticated && <Navbar />}
         <Routes>
           <Route
             path="/"
@@ -36,25 +32,15 @@ export function App() {
               </Suspense>
             }
           />
-          <Route
-            path="/about"
-            element={
-              <Suspense>
-                <AboutPage />
-              </Suspense>
-            }
-          />
           <Route element={<AuthenticationProvider />}>
-            <Route element={<StripeProvider />}>
-              <Route
-                path="/home"
-                element={
-                  <Suspense>
-                    <HomePage />
-                  </Suspense>
-                }
-              />
-            </Route>
+            <Route
+              path="/home"
+              element={
+                <Suspense>
+                  <HomePage />
+                </Suspense>
+              }
+            />
             <Route
               path="/login"
               element={

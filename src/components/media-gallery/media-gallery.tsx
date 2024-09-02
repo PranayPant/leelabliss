@@ -13,7 +13,8 @@ import lgVideo from "lightgallery/plugins/video";
 import "./media-gallery.css";
 
 export interface MediaGalleryItem {
-  src: string;
+  url: string;
+  id: string;
 }
 
 export interface MediaGalleryProps {
@@ -26,15 +27,8 @@ export function MediaGallery({ items }: MediaGalleryProps) {
       elementClassNames="gallery"
       plugins={[lgThumbnail, lgZoom, lgVideo]}
     >
-      {items.map(({ src }) => (
-        <a href={src}>
-          <img
-            className="img-responsive"
-            alt="img1"
-            src={src}
-            style={{ width: "100%" }}
-          />
-        </a>
+      {items.map(({ id, url }) => (
+        <img key={id} alt={"picture"} src={url} width={300} height={300} />
       ))}
     </LightGallery>
   );
