@@ -2,6 +2,7 @@ import {
   InputHTMLAttributes,
   KeyboardEventHandler,
   MouseEvent,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -12,7 +13,7 @@ export function TagInput({
 }: {
   inputProps: InputHTMLAttributes<HTMLInputElement>;
 }) {
-  const ref = useRef<HTMLUListElement | null>(null);
+  const ref = useRef<HTMLInputElement | null>(null);
   const [tags, setTags] = useState<string[]>([]);
   const handleInputKeydown: KeyboardEventHandler<HTMLInputElement> = (
     event,
@@ -33,16 +34,22 @@ export function TagInput({
     setTags((prev) => prev.filter((tag) => tag !== currentTag));
   };
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.setAttribute("data-tags", JSON.stringify(tags));
+    }
+  }, [tags]);
+
   return (
     <div className={styles["tags-input"]}>
       <input
+        ref={ref}
         type="text"
-        name="tags"
         placeholder="Enter tag name"
         onKeyDown={handleInputKeydown}
         {...inputProps}
       />
-      <ul ref={ref}>
+      <ul>
         {tags?.map((tag) => (
           <li key={tag}>
             <button type="button" data-tag={tag} onClick={handleRemoveTag}>

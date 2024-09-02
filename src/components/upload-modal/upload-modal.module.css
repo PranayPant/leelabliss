@@ -2,19 +2,23 @@
   width: 100%;
   overflow: hidden !important;
   margin: 0;
+  position: relative;
 }
 
 .modal-body section {
   margin: 32px;
-  margin-bottom: 0;
-  position: relative;
+  margin-bottom: 48px;
 }
-.modal-body section button.submit-btn {
-  margin-top: 16px;
-  display: inline-block;
+.modal-body button.submit-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
   outline: 0;
   cursor: pointer;
-  padding: 5px 16px;
+  padding: 5px 8px 5px 0;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -34,6 +38,13 @@
     border-color: #1b1f2326;
     transition-duration: 0.1s;
   }
+}
+
+.modal-body button.submit-btn span {
+  padding-left: 8px;
+}
+.modal-body button.submit-btn svg {
+  margin-left: 8px;
 }
 
 .upload-slide {
