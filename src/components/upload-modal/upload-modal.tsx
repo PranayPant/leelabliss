@@ -43,9 +43,16 @@ export function UploadModal(props: ModalProps) {
   };
   return (
     <Modal
+      closeOnEsc={!isSubmittingForm}
+      closeOnOverlayClick={!isSubmittingForm}
+      blockScroll={isSubmittingForm}
+      showCloseIcon={!isSubmittingForm}
       center
       classNames={{
         modal: styles["modal-body"],
+        overlay: isSubmittingForm
+          ? styles["modal-submitting-overlay"]
+          : undefined,
       }}
       {...props}
     >
