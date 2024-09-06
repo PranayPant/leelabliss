@@ -1,0 +1,93 @@
+.mobile-nav {
+  position: sticky;
+  bottom: 0;
+  padding: 4px;
+  display: flex;
+  background-color: #444;
+  z-index: 10;
+  @media screen and (width > 760px) {
+    display: none;
+  }
+}
+
+.mobile-nav > div {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 50px;
+  flex-basis: 50px;
+  vertical-align: bottom;
+  transition-property: all;
+  transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  &:focus-within {
+    flex-grow: 1;
+  }
+}
+
+.mobile-nav > div > div {
+  width: 100%;
+}
+
+.mobile-nav > div > div > input {
+  box-shadow: unset;
+  border-radius: unset;
+  background-color: white;
+  outline: none;
+  border: none;
+  padding: 0;
+  width: 0;
+  height: 50px;
+  transition-property: all;
+  transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+
+  &:focus {
+    padding: 16px;
+    width: 100%;
+  }
+}
+
+.mobile-nav > div > div:focus-within + label {
+  transition-property: all;
+  transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+}
+
+.mobile-nav > div > label > span {
+  display: inline-block;
+  pointer-events: none;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+}
+
+.mobile-nav > div > label {
+  display: block;
+  font-size: 22px;
+  width: 50px;
+  margin: 0;
+  padding: 0;
+  background-color: #444;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: absolute;
+}

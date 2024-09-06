@@ -16,11 +16,20 @@
   height: 100%;
 }
 
-.search {
-  padding: 0 8px;
-  max-width: 100%;
-  margin: auto;
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
+}
 
+.search {
+  width: 100%;
   @media screen and (width > 760px) {
     max-width: 700px;
   }

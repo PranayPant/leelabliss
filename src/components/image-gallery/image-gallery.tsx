@@ -5,6 +5,7 @@ import styles from "./image-gallery.module.css";
 import { GalleryContent } from "store/content";
 import { getImgixUrl } from "utils/imgix";
 import { CSSProperties } from "react";
+import { MobileNav } from "./mobile-nav";
 
 interface ImageGalleryProps {
   images: GalleryContent[];
@@ -48,6 +49,7 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
             </Item>
           );
         })}
+        <MobileNav />
       </div>
     </Gallery>
   );

@@ -41,16 +41,19 @@ function HomePageComponent() {
     refine(debouncedValue);
   }, [debouncedValue, refine]);
 
-  useEffect(() => {
-    return () => resetContentStore();
-  }, [resetContentStore]);
+  // useEffect(() => {
+  //   return () => resetContentStore();
+  // }, [resetContentStore]);
 
   return (
     <div className={styles["container"]}>
       <div className={styles["gallery"]}>
-        <div className={styles["search"]}>
-          <ComboBox inputValue={inputValue} handleChange={handleChange} />
+        <div className={styles["search-container"]}>
+          <div className={styles["search"]}>
+            <ComboBox inputValue={inputValue} handleChange={handleChange} />
+          </div>
         </div>
+
         <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
         <UploadModal
           open={shouldShowModal && uploads.length > 0}
