@@ -9,7 +9,7 @@ export interface ComboBoxState {
 export function ComboBox({ inputValue, handleChange }: ComboBoxState) {
   return (
     <div className={styles["combo-box"]}>
-      <input value={inputValue} onChange={handleChange} />
+      <input value={inputValue} onChange={handleChange} type="search" />
       <button className={styles["search"]}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
