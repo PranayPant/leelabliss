@@ -10,6 +10,7 @@ import { useInput } from "hooks/search";
 import { ComboBox } from "components/combo-box";
 import { UploadModal } from "components/upload-modal";
 import { useUploadStore } from "store/upload";
+import { MobileNav } from "components/image-gallery/mobile-nav";
 
 function HomePageComponent() {
   const { scrollDepth } = useThrottledScroll(100);
@@ -54,7 +55,9 @@ function HomePageComponent() {
           </div>
         </div>
 
-        <ImageGalleryComponent images={query ? refinedItems : galleryItems} />
+        <ImageGalleryComponent images={query ? refinedItems : galleryItems}>
+          <MobileNav inputValue={inputValue} handleInputChange={handleChange} />
+        </ImageGalleryComponent>
         <UploadModal
           open={shouldShowModal && uploads.length > 0}
           onClose={() => setStore({ shouldShowModal: false, uploads: [] })}

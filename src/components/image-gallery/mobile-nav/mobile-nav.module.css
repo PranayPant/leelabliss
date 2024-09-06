@@ -3,6 +3,7 @@
   bottom: 0;
   padding: 4px;
   display: flex;
+  flex-direction: row-reverse;
   background-color: #444;
   z-index: 10;
   @media screen and (width > 760px) {
@@ -28,6 +29,7 @@
 
 .mobile-nav > div > div {
   width: 100%;
+  background-color: white;
 }
 
 .mobile-nav > div > div > input {
@@ -40,23 +42,23 @@
   width: 0;
   height: 50px;
   transition-property: all;
-  transition-duration: 0.4s;
-  -moz-transition-duration: 0.4s;
-  -webkit-transition-duration: 0.4s;
-  -o-transition-duration: 0.4s;
+  transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  -webkit-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
 
   &:focus {
     padding: 16px;
-    width: 100%;
+    width: 95%;
   }
 }
 
 .mobile-nav > div > div:focus-within + label {
   transition-property: all;
-  transition-duration: 0.4s;
-  -moz-transition-duration: 0.4s;
-  -webkit-transition-duration: 0.4s;
-  -o-transition-duration: 0.4s;
+  transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  -webkit-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
   background-color: white;
   color: black;
 }

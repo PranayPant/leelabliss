@@ -4,11 +4,11 @@ import { Gallery, Item } from "react-photoswipe-gallery";
 import styles from "./image-gallery.module.css";
 import { GalleryContent } from "store/content";
 import { getImgixUrl } from "utils/imgix";
-import { CSSProperties } from "react";
-import { MobileNav } from "./mobile-nav";
+import { CSSProperties, Children, ReactNode } from "react";
 
 interface ImageGalleryProps {
   images: GalleryContent[];
+  children?: ReactNode;
 }
 
 const smallItemStyles: CSSProperties = {
@@ -16,7 +16,7 @@ const smallItemStyles: CSSProperties = {
   maxHeight: 300,
 };
 
-export function ImageGalleryComponent({ images }: ImageGalleryProps) {
+export function ImageGalleryComponent({ images, children }: ImageGalleryProps) {
   return (
     <Gallery>
       <div className={styles["gallery"]}>
@@ -49,7 +49,7 @@ export function ImageGalleryComponent({ images }: ImageGalleryProps) {
             </Item>
           );
         })}
-        <MobileNav />
+        {children}
       </div>
     </Gallery>
   );

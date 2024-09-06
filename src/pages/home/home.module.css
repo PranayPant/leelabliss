@@ -17,15 +17,20 @@
 }
 
 .search-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding: 8px;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 10;
+  display: none;
+
+  @media screen and (width > 760px) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    margin-bottom: 72px;
+  }
 }
 
 .search {
